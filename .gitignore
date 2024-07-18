@@ -1,3 +1,7 @@
+# Project-specific
+cert.pem
+key.pem
+
 # Dependency directories
 node_modules/
 
