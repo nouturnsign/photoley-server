@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { comparePassword } from '../utils/authUtils';
-import { createAccessToken, createRefreshToken, verifyToken } from '../utils/tokenUtils';
+import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel'; 
 
 // Login endpoint
