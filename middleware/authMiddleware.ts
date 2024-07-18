@@ -1,18 +1,36 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/tokenUtils';
+import { verifyToken, createAccessToken } from '../utils/tokenUtils';
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(' ')[1];
+  const refreshToken = req.cookies.refreshToken;
 
-  if (token == null) return res.sendStatus(401);
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
 
   try {
     const payload = await verifyToken(token);
     res.locals.userId = payload.userId;
     next();
   } catch (err) {
-    return res.sendStatus(403);
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Invalid token and no refresh token provided' });
+    }
+
+    try {
+      const refreshPayload = await verifyToken(refreshToken);
+      const newAccessToken = await createAccessToken(refreshPayload.userId);
+
+      res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+      res.locals.userId = refreshPayload.userId;
+      next();
+    } catch (refreshErr) {
+      console.error(refreshErr);
+      res.status(401).json({ message: 'Invalid refresh token' });
+    }
   }
 }
 

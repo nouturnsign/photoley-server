@@ -46,31 +46,4 @@ const login = async (req: Request, res: Response) => {
   }
 }
 
-// Logout endpoint
-const logout = async (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Logged out successfully' });
-}
-
-// Refresh token endpoint
-const refreshToken = async (req: Request, res: Response) => {
-  const { refreshToken } = req.body;
-
-  if (!refreshToken) {
-    return res.status(400).json({ message: 'Refresh token is required' });
-  }
-
-  try {
-    // Verify the refresh token
-    const payload = await verifyToken(refreshToken);
-
-    // Create a new access token
-    const newAccessToken = await createAccessToken(payload.userId);
-
-    res.json({ accessToken: newAccessToken });
-  } catch (err) {
-    console.error(err);
-    res.status(403).json({ message: 'Invalid refresh token' });
-  }
-}
-
-export { login, logout, refreshToken };
+export { login };
