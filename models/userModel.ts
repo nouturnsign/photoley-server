@@ -15,6 +15,8 @@ const userSchema = new Schema<IUser>({
   password: { type: String, required: true },
   username: { type: String, required: true },
   profilePicture: { type: String },
+}, {
+  timestamps: true
 });
 
 // Hash the password before saving the user
@@ -25,6 +27,6 @@ userSchema.pre('save', async function (this: IUser, next) {
   next();
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>('User', userSchema, 'Users');
 
 export default User;

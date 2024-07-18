@@ -15,6 +15,6 @@ const photoSchema = new Schema<IPhoto>({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
-const Photo = mongoose.model<IPhoto>('Photo', photoSchema);
+const Photo = mongoose.model<IPhoto>('Photo', photoSchema, 'Photos');
 
 export default Photo;

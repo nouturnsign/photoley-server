@@ -1,14 +1,6 @@
 import { Request, Response } from 'express';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
-import { config } from '../utils/config';
-
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: config.cloudinary.cloudName,
-  api_key: config.cloudinary.apiKey,
-  api_secret: config.cloudinary.apiSecret,
-});
 
 const uploadPhoto = async (req: Request, res: Response) => {
   const { photo, location } = req.body;

@@ -1,7 +1,75 @@
 import { Request, Response } from 'express';
+import { v2 as cloudinary } from 'cloudinary';
 import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel'; 
+
+// Regiser endpoint
+const register = async (req: Request, res: Response) => {
+  const { email, password, username, profilePicture } = req.body;
+
+  if (!email || !password || !username) {
+    return res.status(400).json({ message: 'Email, password, and username are required' });
+  }
+
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email: email });
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'User with this email already exists' });
+    }
+
+    // Upload profile picture to Cloudinary
+    let profilePictureUrl = '';
+    if (req.file) {
+      const uploadResponse = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: 'profile_pictures' },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        ).end(req.file?.buffer);
+      });
+      profilePictureUrl = (uploadResponse as any).secure_url;
+    }
+
+    // Create a new user
+    const newUser = new User({
+      email,
+      password,
+      username,
+      profilePicture: profilePictureUrl
+    });
+
+    // Save the user to the database
+    const savedUser = await newUser.save();
+
+    // Create tokens
+    const accessToken = await createAccessToken(savedUser.id);
+    const refreshToken = await createRefreshToken(savedUser.id);
+
+    // Send tokens as response
+    res.status(201).json({
+      accessToken,
+      refreshToken,
+      user: {
+        id: savedUser.id,
+        email: savedUser.email,
+        username: savedUser.username,
+        profilePicture: savedUser.profilePicture,
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  }
+};
 
 // Login endpoint
 const login = async (req: Request, res: Response) => {
@@ -13,7 +81,7 @@ const login = async (req: Request, res: Response) => {
 
   try {
     // Find the user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -38,6 +106,7 @@ const login = async (req: Request, res: Response) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        profilePicture: user.profilePicture,
       },
     });
   } catch (err) {
@@ -46,4 +115,4 @@ const login = async (req: Request, res: Response) => {
   }
 }
 
-export { login };
+export { register, login };
