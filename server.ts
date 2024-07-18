@@ -19,8 +19,8 @@ app.use('/api/v1', v1Router);
 
 // Setup HTTPS
 const httpsOptions = {
-  key: fs.readFileSync('./keys/key.pem'),
-  cert: fs.readFileSync('./keys/cert.pem')
+  key: fs.readFileSync("./keys/localhost-key.pem", "utf-8"),
+  cert: fs.readFileSync("./keys/localhost.pem", "utf-8"),
 };
 
 https.createServer(httpsOptions, app).listen(process.env.PORT || 3000, () => {
