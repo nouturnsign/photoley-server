@@ -1,15 +1,13 @@
 import { Router } from 'express';
-import { login, refreshToken } from '../controllers/authController';
-import { addPhoto, getPhotos } from '../controllers/photosController';
+import authRouter from './authRouter';
+import photoRouter from './photoRouter';
+import profileRouter from './profileRouter';
 
 const router = Router();
 
-// Authentication routes
-router.post('/login', login);
-router.post('/refresh-token', refreshToken);
-
-// Photo routes
-router.post('/photos', addPhoto);
-router.get('/photos', getPhotos);
+// Public routes
+router.use('/auth', authRouter);
+router.use('/photo', photoRouter);
+router.use('/profile', profileRouter);
 
 export default router;

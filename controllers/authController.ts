@@ -1,44 +1,76 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
-import { SignJWT, jwtVerify } from 'jose';
-import User from '../models/userModel';
-import { getKeys } from '../config';
+import { comparePassword } from '../utils/authUtils';
+import { createAccessToken, createRefreshToken, verifyToken } from '../utils/tokenUtils';
+import User from '../models/userModel'; 
 
-export const login = async (req: Request, res: Response) => {
+// Login endpoint
+const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
 
-  if (!user || !bcrypt.compareSync(password, user.password)) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
   }
-
-  const { privateKey } = await getKeys();
-
-  const accessToken = await new SignJWT({ userId: user.id })
-    .setExpirationTime('1h')
-    .sign(privateKey);
-
-  const refreshToken = await new SignJWT({ userId: user.id })
-    .setExpirationTime('30d')
-    .sign(privateKey);
-
-  res.json({ accessToken, refreshToken });
-};
-
-export const refreshToken = async (req: Request, res: Response) => {
-  const { refreshToken } = req.body;
 
   try {
-    const { publicKey } = await getKeys();
-    const { payload } = await jwtVerify(refreshToken, publicKey);
+    // Find the user by email
+    const user = await User.findOne({ email });
 
-    const { privateKey } = await getKeys();
-    const accessToken = await new SignJWT({ userId: payload.userId })
-      .setExpirationTime('1h')
-      .sign(privateKey);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-    res.json({ accessToken });
+    // Compare the provided password with the stored hash
+    const isPasswordValid = await comparePassword(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Create access and refresh tokens
+    const accessToken = await createAccessToken(user.id);
+    const refreshToken = await createRefreshToken(user.id);
+
+    // Send tokens as response
+    res.json({
+      accessToken,
+      refreshToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      },
+    });
   } catch (err) {
-    res.status(401).json({ message: 'Invalid refresh token' });
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
-};
+}
+
+// Logout endpoint
+const logout = async (req: Request, res: Response) => {
+  res.status(200).json({ message: 'Logged out successfully' });
+}
+
+// Refresh token endpoint
+const refreshToken = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(400).json({ message: 'Refresh token is required' });
+  }
+
+  try {
+    // Verify the refresh token
+    const payload = await verifyToken(refreshToken);
+
+    // Create a new access token
+    const newAccessToken = await createAccessToken(payload.userId);
+
+    res.json({ accessToken: newAccessToken });
+  } catch (err) {
+    console.error(err);
+    res.status(403).json({ message: 'Invalid refresh token' });
+  }
+}
+
+export { login, logout, refreshToken };

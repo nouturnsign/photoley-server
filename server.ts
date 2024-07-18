@@ -1,33 +1,28 @@
 import express from 'express';
-import fs from 'fs';
-import https from 'https';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import authRouter from './routes/authRouter';
-import profileRouter from './routes/profileRouter';
-import photosRouter from './routes/photosRouter';
+import v1Router from './routes/v1';
+import dotenv from 'dotenv';
+import https from 'https';
+import fs from 'fs';
 
 dotenv.config();
 
 const app = express();
-const port = 3000;
-
-// Middleware
 app.use(express.json());
-app.use('/auth', authRouter);
-app.use('/profile', profileRouter);
-app.use('/photos', photosRouter);
 
-// HTTPS Configuration
+mongoose.connect(process.env.MONGO_URI as string)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Apply routes
+app.use('/api/v1', v1Router);
+
+// Setup HTTPS
 const httpsOptions = {
-  key: fs.readFileSync('./key.pem'),
-  cert: fs.readFileSync('./cert.pem')
+  key: fs.readFileSync('./keys/key.pem'),
+  cert: fs.readFileSync('./keys/cert.pem')
 };
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/mydatabase');
-
-// Start HTTPS server
-https.createServer(httpsOptions, app).listen(port, () => {
-  console.log(`Server is running on https://localhost:${port}`);
+https.createServer(httpsOptions, app).listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
