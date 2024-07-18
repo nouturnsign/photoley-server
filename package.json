@@ -1,0 +1,26 @@
+{
+  "name": "picley-mvp-server",
+  "version": "1.0.0",
+  "description": "Picley server (MVP)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nouturnsign/picley-mvp-server.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/nouturnsign/picley-mvp-server/issues"
+  },
+  "homepage": "https://github.com/nouturnsign/picley-mvp-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jose": "^5.6.3",
+    "mongoose": "^8.5.1"
+  }
+}
