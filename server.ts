@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import v1Router from './routes/v1';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import https from 'https';
 import fs from 'fs';
 
@@ -9,6 +10,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI as string)
   .then(() => console.log('MongoDB connected'))
