@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/configDev';
+import { resolveUsernamesToIds } from '../utils/userUtils';
 
 const uploadPhoto = async (req: Request, res: Response) => {
-  const { location } = req.body;
+  const { location, tags } = req.body;
   const userId = res.locals.userId;
 
   if (!req.file) {
@@ -24,6 +25,17 @@ const uploadPhoto = async (req: Request, res: Response) => {
     typeof parsedLocation.lon !== 'number'
   ) {
     return res.status(400).json({ message: 'Invalid location format' });
+  }
+
+  let parsedTags;
+  try {
+    parsedTags = JSON.parse(tags);
+  } catch (error) {
+    return res.status(400).json({ message: 'Invalid tags format' });
+  }
+
+  if (!parsedTags) {
+    return res.status(400).json({ message: 'Invalid tags format' });
   }
 
   const geoLocation = {
@@ -50,10 +62,13 @@ const uploadPhoto = async (req: Request, res: Response) => {
         .end(req.file?.buffer);
     });
 
+    const tagIds = parsedTags ? await resolveUsernamesToIds(parsedTags) : [];
+
     const newPhoto = new Photo({
       photoUrl: (result as any).secure_url,
       location: geoLocation,
       userId,
+      tags: tagIds,
     });
 
     await newPhoto.save();
@@ -76,7 +91,8 @@ const getPhotos = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .skip(skip)
       .limit(limit)
-      .populate('userId', 'username profilePicture');
+      .populate('userId', 'username profilePicture')
+      .populate('tags', 'username profilePicture');
 
     const totalPhotos = await Photo.countDocuments();
 
@@ -95,4 +111,18 @@ const getPhotos = async (req: Request, res: Response) => {
   }
 };
 
-export { uploadPhoto, getPhotos };
+const getTaggedPhotos = async (req: Request, res: Response) => {
+  try {
+    const userId = res.locals.userId;
+
+    const photos = await Photo.find({ tags: userId })
+      .populate('userId', 'username profilePicture')
+      .populate('tags', 'username profilePicture');
+
+    res.json(photos);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to retrieve tagged photos' });
+  }
+};
+
+export { uploadPhoto, getPhotos, getTaggedPhotos };

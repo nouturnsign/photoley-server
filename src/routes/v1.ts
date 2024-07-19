@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { register, login } from '../controllers/authController';
-import { getPhotos, uploadPhoto } from '../controllers/photoController';
+import {
+  getPhotos,
+  uploadPhoto,
+  getTaggedPhotos,
+} from '../controllers/photoController';
 import { getProfile, updateProfile } from '../controllers/profileController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware';
@@ -19,5 +23,6 @@ router.put(
   upload.single('profilePicture'),
   updateProfile
 );
+router.get('/tags', authenticateToken, getTaggedPhotos);
 
 export default router;

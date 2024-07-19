@@ -8,6 +8,7 @@ interface IPhoto extends Document {
   };
   userId: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
+  tags: mongoose.Schema.Types.ObjectId[];
 }
 
 const photoSchema = new Schema<IPhoto>({
@@ -18,6 +19,7 @@ const photoSchema = new Schema<IPhoto>({
   },
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now, index: true },
+  tags: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 // Create a geospatial index on the location field
