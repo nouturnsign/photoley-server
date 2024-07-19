@@ -4,7 +4,7 @@ import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel'; 
 
-// Regiser endpoint
+// Register endpoint
 const register = async (req: Request, res: Response) => {
   const { email, password, username, profilePicture } = req.body;
 

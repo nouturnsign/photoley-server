@@ -4,9 +4,9 @@
   "description": "Picley server (MVP)",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server.ts",
+    "start": "ts-node src/server.ts",
     "build": "tsc",
-    "dev": "ts-node-dev server.ts"
+    "dev": "ts-node-dev src/server.ts"
   },
   "repository": {
     "type": "git",
