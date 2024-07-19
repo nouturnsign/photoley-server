@@ -4,7 +4,7 @@ import { v2 as cloudinary } from 'cloudinary';
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
-// TODO: get keys for https server
+// TODO: get production database uri
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -35,8 +35,8 @@ const config = {
   },
   port: isProduction ? process.env.PORT : 3000,
   tls: {
-    keyPath: isProduction ? './localhost-key.pem' : './localhost-key.pem',
-    certPath: isProduction ? './localhost.pem' : './localhost.pem',
+    keyPath: isProduction ? '' : './localhost-key.pem',
+    certPath: isProduction ? '' : './localhost.pem',
   },
 };
 
