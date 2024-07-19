@@ -6,7 +6,7 @@ import {
   importSPKI,
   KeyLike,
 } from 'jose';
-import { config } from './configDev';
+import { config } from './config';
 import { readFileSync } from 'fs';
 
 interface UserPayload extends JWTPayload {

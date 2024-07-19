@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/userModel';
 import { v2 as cloudinary } from 'cloudinary';
-import { config } from '../utils/configDev';
+import { config } from '../utils/config';
 
 // Get profile
 async function getProfile(req: Request, res: Response) {

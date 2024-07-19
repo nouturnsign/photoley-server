@@ -3,7 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel';
-import { config } from '../utils/configDev';
+import { config } from '../utils/config';
 
 // Register endpoint
 const register = async (req: Request, res: Response) => {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
-import { config } from '../utils/configDev';
+import { config } from '../utils/config';
 import { resolveUsernamesToIds } from '../utils/userUtils';
 import { getHeatmapData } from '../utils/photoUtils';
 

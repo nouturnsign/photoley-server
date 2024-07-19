@@ -3,6 +3,9 @@ import { v2 as cloudinary } from 'cloudinary';
 
 dotenv.config();
 
+const isProduction = process.env.NODE_ENV === 'production';
+// TODO: get keys for https server
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -28,12 +31,14 @@ const config = {
   },
   mongoDB: {
     uri: process.env.MONGO_URI as string,
-    autoIndex: true,
+    autoIndex: isProduction ? true : false,
   },
-  port: 3000,
+  port: isProduction ? process.env.PORT : 3000,
   tls: {
-    keyPath: './keys/localhost-key.pem',
-    certPath: './keys/localhost.pem',
+    keyPath: isProduction
+      ? './keys/localhost-key.pem'
+      : './keys/localhost-key.pem',
+    certPath: isProduction ? './keys/localhost.pem' : './keys/localhost.pem',
   },
 };
 

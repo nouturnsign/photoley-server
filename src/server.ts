@@ -4,7 +4,7 @@ import v1Router from './routes/v1';
 import cookieParser from 'cookie-parser';
 import https from 'https';
 import fs from 'fs';
-import { config } from './utils/configDev';
+import { config } from './utils/config';
 
 const app = express();
 app.use(express.json());
