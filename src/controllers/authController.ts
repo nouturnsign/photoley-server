@@ -14,10 +14,15 @@ const register = async (req: Request, res: Response) => {
 
   try {
     // Check if user already exists
-    const existingUser = await User.findOne({ email: email });
+    const existingEmail = await User.findOne({ email: email });
 
-    if (existingUser) {
+    if (existingEmail) {
       return res.status(409).json({ message: 'User with this email already exists' });
+    }
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username already exists' });
     }
 
     // Upload profile picture to Cloudinary
