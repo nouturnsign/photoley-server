@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify, JWTPayload, importPKCS8, importSPKI, KeyLike } from 'jose';
-import { config } from './config';
+import { config } from './configDev';
 import { readFileSync } from 'fs';
 
 interface UserPayload extends JWTPayload {
