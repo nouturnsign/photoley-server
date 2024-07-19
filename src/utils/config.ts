@@ -4,7 +4,6 @@ import { v2 as cloudinary } from 'cloudinary';
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
-// TODO: get production database uri
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
