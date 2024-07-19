@@ -26,8 +26,8 @@ const config = {
     ],
   },
   jwt: {
-    privateKeyPath: './keys/private.pem',
-    publicKeyPath: './keys/public.pem',
+    privateKeyPath: './private.pem',
+    publicKeyPath: './public.pem',
   },
   mongoDB: {
     uri: process.env.MONGO_URI as string,
@@ -35,10 +35,8 @@ const config = {
   },
   port: isProduction ? process.env.PORT : 3000,
   tls: {
-    keyPath: isProduction
-      ? './keys/localhost-key.pem'
-      : './keys/localhost-key.pem',
-    certPath: isProduction ? './keys/localhost.pem' : './keys/localhost.pem',
+    keyPath: isProduction ? './localhost-key.pem' : './localhost-key.pem',
+    certPath: isProduction ? './localhost.pem' : './localhost.pem',
   },
 };
 
