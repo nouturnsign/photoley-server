@@ -4,7 +4,7 @@ import v1Router from './routes/v1';
 import cookieParser from 'cookie-parser';
 import https from 'https';
 import fs from 'fs';
-import { config } from './utils/config';
+import { config, isProduction } from './utils/config';
 
 const app = express();
 app.use(express.json());
@@ -18,12 +18,18 @@ mongoose
 // Apply routes
 app.use('/api/v1', v1Router);
 
-// Setup HTTPS
-const httpsOptions = {
-  key: fs.readFileSync(config.tls.keyPath, 'utf-8'),
-  cert: fs.readFileSync(config.tls.certPath, 'utf-8'),
-};
+if (isProduction) {
+  app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+  });
+} else {
+  // Setup HTTPS locally
+  const httpsOptions = {
+    key: fs.readFileSync(config.tls.keyPath, 'utf-8'),
+    cert: fs.readFileSync(config.tls.certPath, 'utf-8'),
+  };
 
-https.createServer(httpsOptions, app).listen(config.port, () => {
-  console.log(`Server is running on port ${config.port}`);
-});
+  https.createServer(httpsOptions, app).listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+  });
+}

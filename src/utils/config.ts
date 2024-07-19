@@ -42,4 +42,4 @@ const config = {
   },
 };
 
-export { config };
+export { config, isProduction };
