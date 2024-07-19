@@ -24,4 +24,6 @@ const photoSchema = new Schema<IPhoto>({
 photoSchema.index({ location: '2dsphere' });
 
 const Photo = mongoose.model<IPhoto>('Photo', photoSchema, 'Photos');
+
 export default Photo;
+export { IPhoto };
