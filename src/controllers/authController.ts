@@ -3,7 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel';
-import { config } from '../utils/config';
+import { config, isProduction } from '../utils/config';
 
 // Register endpoint
 const register = async (req: Request, res: Response) => {
@@ -68,10 +68,19 @@ const register = async (req: Request, res: Response) => {
     const accessToken = await createAccessToken(savedUser.id);
     const refreshToken = await createRefreshToken(savedUser.id);
 
+    // Send access token in the response header
+    res.setHeader('Authorization', `Bearer ${accessToken}`);
+
+    // Set refresh token as an HTTP-only cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: isProduction, // Use secure cookies in production
+      sameSite: 'strict', // Mitigate CSRF attacks
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
     // Send tokens as response
     res.status(201).json({
-      accessToken,
-      refreshToken,
       user: {
         id: savedUser.id,
         email: savedUser.email,
@@ -115,10 +124,19 @@ const login = async (req: Request, res: Response) => {
     const accessToken = await createAccessToken(user.id);
     const refreshToken = await createRefreshToken(user.id);
 
+    // Send access token in the response header
+    res.setHeader('Authorization', `Bearer ${accessToken}`);
+
+    // Set refresh token as an HTTP-only cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: isProduction, // Use secure cookies in production
+      sameSite: 'strict', // Mitigate CSRF attacks
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
     // Send tokens as response
     res.json({
-      accessToken,
-      refreshToken,
       user: {
         id: user.id,
         email: user.email,
