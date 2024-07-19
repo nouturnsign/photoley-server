@@ -13,7 +13,7 @@ interface IUser extends Document {
 const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   profilePicture: { type: String },
 }, {
   timestamps: true
@@ -30,3 +30,4 @@ userSchema.pre('save', async function (this: IUser, next) {
 const User = mongoose.model<IUser>('User', userSchema, 'Users');
 
 export default User;
+export { IUser };
