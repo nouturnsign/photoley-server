@@ -7,6 +7,7 @@ interface IPhoto extends Document {
     coordinates: [number, number];
   };
   userId: mongoose.Schema.Types.ObjectId;
+  createdAt: Date;
 }
 
 const photoSchema = new Schema<IPhoto>({
@@ -16,6 +17,7 @@ const photoSchema = new Schema<IPhoto>({
     coordinates: { type: [Number], required: true }
   },
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now, index: true },
 });
 
 // Create a geospatial index on the location field

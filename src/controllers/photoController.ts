@@ -55,9 +55,24 @@ const uploadPhoto = async (req: Request, res: Response) => {
 };
 
 const getPhotos = async (req: Request, res: Response) => {
+  const skip = parseInt(req.query.skip as string) || 0;
+  const limit = parseInt(req.query.limit as string) || 10;
+
   try {
-    const photos = await Photo.find().populate('userId', 'username profilePicture');
-    res.json(photos);
+    const photos = await Photo.find()
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+      .skip(skip)
+      .limit(limit)
+      .populate('userId', 'username profilePicture');
+    
+    const totalPhotos = await Photo.countDocuments();
+    
+    res.json({
+      photos,
+      total: totalPhotos,
+      skip,
+      limit,
+    });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: 'Failed to retrieve photos', error: err.message });
