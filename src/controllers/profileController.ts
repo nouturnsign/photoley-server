@@ -22,13 +22,25 @@ const updateProfile = async (req: Request, res: Response) => {
   const { username } = req.body;
 
   try {
-    const existingUsername = await User.findOne({ username, _id: { $ne: userId } });
-    if (existingUsername) {
-      return res.status(400).json({ message: 'Username already exists' });
+    // Find the current user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
+    // Check if username is already taken by another user
+    if (username && username !== user.username) {
+      const existingUsername = await User.findOne({ username });
+      if (existingUsername) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+    }
+
+    // Prepare updated fields
     let updatedFields: Partial<IUser> = { username };
+    let oldProfilePicturePublicId: string | null = null;
     if (req.file) {
+      // Upload new profile picture to Cloudinary
       const uploadResponse = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
           { folder: 'profile_pictures' },
@@ -42,15 +54,27 @@ const updateProfile = async (req: Request, res: Response) => {
         ).end(req.file?.buffer);
       });
       updatedFields.profilePicture = (uploadResponse as any).secure_url;
+
+      // Prepare to delete the old profile picture from Cloudinary
+      // This code was AI-generated: tbh, I don't know what an expected "public id" should look like.
+      if (user.profilePicture) {
+        oldProfilePicturePublicId = user.profilePicture.split('/').slice(-1)[0].split('.')[0];
+      }
     }
 
-    const user = await User.findByIdAndUpdate(userId, updatedFields, { new: true }).select('-password');
+    // Update the user with new details
+    const updatedUser = await User.findByIdAndUpdate(userId, updatedFields, { new: true }).select('-password');
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found after update' });
     }
 
-    res.json(user);
+    // Delete the old profile picture from Cloudinary if new one was uploaded successfully
+    if (oldProfilePicturePublicId) {
+      await cloudinary.uploader.destroy(`profile_pictures/${oldProfilePicturePublicId}`);
+    }
+
+    res.json(updatedUser);
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: 'Failed to update user profile', error: err.message });
