@@ -14,19 +14,19 @@ const config = {
     profilePictureTransformation: [
       { width: 400, height: 400, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality
-      { fetch_format: 'auto' } // Optimize format
+      { fetch_format: 'auto' }, // Optimize format
     ],
     photoTransformation: [
       { width: 1200, height: 1200, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality
-      { fetch_format: 'auto' } // Optimize format
-    ]
+      { fetch_format: 'auto' }, // Optimize format
+    ],
   },
   jwt: {
     privateKeyPath: './keys/private.pem',
     publicKeyPath: './keys/public.pem',
   },
-  mongoDB: { 
+  mongoDB: {
     uri: process.env.MONGO_URI as string,
     autoIndex: true,
   },
@@ -34,7 +34,7 @@ const config = {
   tls: {
     keyPath: './keys/localhost-key.pem',
     certPath: './keys/localhost.pem',
-  }
+  },
 };
 
 export { config };

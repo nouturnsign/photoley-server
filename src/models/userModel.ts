@@ -10,14 +10,17 @@ interface IUser extends Document {
   profilePicture: string;
 }
 
-const userSchema = new Schema<IUser>({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  username: { type: String, required: true, unique: true },
-  profilePicture: { type: String },
-}, {
-  timestamps: true
-});
+const userSchema = new Schema<IUser>(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    profilePicture: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Hash the password before saving the user
 userSchema.pre('save', async function (this: IUser, next) {

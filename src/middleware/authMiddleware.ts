@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, createAccessToken } from '../utils/tokenUtils';
 
-const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
+const authenticateToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const authHeader = req.headers.authorization;
   const refreshToken = req.cookies.refreshToken;
 
@@ -17,7 +21,9 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
     next();
   } catch (err) {
     if (!refreshToken) {
-      return res.status(401).json({ message: 'Invalid token and no refresh token provided' });
+      return res
+        .status(401)
+        .json({ message: 'Invalid token and no refresh token provided' });
     }
 
     try {
@@ -32,6 +38,6 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
       res.status(401).json({ message: 'Invalid refresh token' });
     }
   }
-}
+};
 
 export { authenticateToken };

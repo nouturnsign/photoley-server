@@ -14,7 +14,7 @@ const photoSchema = new Schema<IPhoto>({
   photoUrl: { type: String, required: true },
   location: {
     type: { type: String, enum: ['Point'], required: true },
-    coordinates: { type: [Number], required: true }
+    coordinates: { type: [Number], required: true },
   },
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now, index: true },

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
 import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
-import User from '../models/userModel'; 
+import User from '../models/userModel';
 import { config } from '../utils/configDev';
 
 // Register endpoint
@@ -10,7 +10,9 @@ const register = async (req: Request, res: Response) => {
   const { email, password, username, profilePicture } = req.body;
 
   if (!email || !password || !username) {
-    return res.status(400).json({ message: 'Email, password, and username are required' });
+    return res
+      .status(400)
+      .json({ message: 'Email, password, and username are required' });
   }
 
   try {
@@ -18,7 +20,9 @@ const register = async (req: Request, res: Response) => {
     const existingEmail = await User.findOne({ email: email });
 
     if (existingEmail) {
-      return res.status(409).json({ message: 'User with this email already exists' });
+      return res
+        .status(409)
+        .json({ message: 'User with this email already exists' });
     }
 
     const existingUsername = await User.findOne({ username });
@@ -30,16 +34,21 @@ const register = async (req: Request, res: Response) => {
     let profilePictureUrl = '';
     if (req.file) {
       const uploadResponse = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          { folder: 'profile_pictures', transformation: config.cloudinary.profilePictureTransformation },
-          (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
+        cloudinary.uploader
+          .upload_stream(
+            {
+              folder: 'profile_pictures',
+              transformation: config.cloudinary.profilePictureTransformation,
+            },
+            (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
             }
-          }
-        ).end(req.file?.buffer);
+          )
+          .end(req.file?.buffer);
       });
       profilePictureUrl = (uploadResponse as any).secure_url;
     }
@@ -49,7 +58,7 @@ const register = async (req: Request, res: Response) => {
       email,
       password,
       username,
-      profilePicture: profilePictureUrl
+      profilePicture: profilePictureUrl,
     });
 
     // Save the user to the database
@@ -72,7 +81,9 @@ const register = async (req: Request, res: Response) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(500).json({ message: 'Internal server error', error: error.message });
+      return res
+        .status(500)
+        .json({ message: 'Internal server error', error: error.message });
     }
   }
 };
@@ -119,6 +130,6 @@ const login = async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 export { register, login };

@@ -1,4 +1,11 @@
-import { SignJWT, jwtVerify, JWTPayload, importPKCS8, importSPKI, KeyLike } from 'jose';
+import {
+  SignJWT,
+  jwtVerify,
+  JWTPayload,
+  importPKCS8,
+  importSPKI,
+  KeyLike,
+} from 'jose';
 import { config } from './configDev';
 import { readFileSync } from 'fs';
 
@@ -23,7 +30,7 @@ const createAccessToken = async (userId: string) => {
     .setProtectedHeader({ alg: 'RS256' })
     .setExpirationTime('15m')
     .sign(privateKeyObject);
-}
+};
 
 // Create refresh token
 const createRefreshToken = async (userId: string) => {
@@ -31,7 +38,7 @@ const createRefreshToken = async (userId: string) => {
     .setProtectedHeader({ alg: 'RS256' })
     .setExpirationTime('30d')
     .sign(privateKeyObject);
-}
+};
 
 // Verify token
 const verifyToken = async (token: string) => {
@@ -44,6 +51,6 @@ const verifyToken = async (token: string) => {
   }
 
   return payload as UserPayload;
-}
+};
 
 export { createAccessToken, createRefreshToken, verifyToken };

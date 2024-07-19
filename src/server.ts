@@ -4,15 +4,16 @@ import v1Router from './routes/v1';
 import cookieParser from 'cookie-parser';
 import https from 'https';
 import fs from 'fs';
-import { config } from './utils/configDev'
+import { config } from './utils/configDev';
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect(config.mongoDB.uri, { autoIndex: config.mongoDB.autoIndex })
+mongoose
+  .connect(config.mongoDB.uri, { autoIndex: config.mongoDB.autoIndex })
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Apply routes
 app.use('/api/v1', v1Router);
