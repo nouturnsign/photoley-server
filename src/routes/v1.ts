@@ -13,6 +13,6 @@ router.post('/login', login);
 router.get('/photo', authenticateToken, getPhotos);
 router.post('/photo', authenticateToken, upload.single('photo'), uploadPhoto);
 router.get('/profile', authenticateToken, getProfile);
-router.put('/profile', authenticateToken, updateProfile);
+router.put('/profile', authenticateToken, upload.single('profilePicture'), updateProfile);
 
 export default router;

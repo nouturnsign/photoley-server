@@ -19,7 +19,7 @@ async function getProfile(req: Request, res: Response) {
 // Edit profile
 const updateProfile = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
-  const { username, profilePicture } = req.body;
+  const { username } = req.body;
 
   try {
     const existingUsername = await User.findOne({ username, _id: { $ne: userId } });
@@ -28,13 +28,20 @@ const updateProfile = async (req: Request, res: Response) => {
     }
 
     let updatedFields: Partial<IUser> = { username };
-
-    if (profilePicture) {
-      const result = await cloudinary.uploader.upload(profilePicture, {
-        folder: 'profile_pictures',
-        use_filename: true,
+    if (req.file) {
+      const uploadResponse = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: 'profile_pictures' },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        ).end(req.file?.buffer);
       });
-      updatedFields.profilePicture = result.secure_url;
+      updatedFields.profilePicture = (uploadResponse as any).secure_url;
     }
 
     const user = await User.findByIdAndUpdate(userId, updatedFields, { new: true }).select('-password');
