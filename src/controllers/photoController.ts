@@ -3,6 +3,7 @@ import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/configDev';
 import { resolveUsernamesToIds } from '../utils/userUtils';
+import { getHeatmapData } from '../utils/photoUtils';
 
 const uploadPhoto = async (req: Request, res: Response) => {
   const { location, tags } = req.body;
@@ -125,4 +126,18 @@ const getTaggedPhotos = async (req: Request, res: Response) => {
   }
 };
 
-export { uploadPhoto, getPhotos, getTaggedPhotos };
+const getHeatmap = async (req: Request, res: Response) => {
+  try {
+    const heatmapData = await getHeatmapData();
+    res.json(heatmapData);
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({
+        message: 'Failed to retrieve heatmap data',
+        error: err.message,
+      });
+    }
+  }
+};
+
+export { uploadPhoto, getPhotos, getTaggedPhotos, getHeatmap };

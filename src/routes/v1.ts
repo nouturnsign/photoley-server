@@ -4,6 +4,7 @@ import {
   getPhotos,
   uploadPhoto,
   getTaggedPhotos,
+  getHeatmap,
 } from '../controllers/photoController';
 import { getProfile, updateProfile } from '../controllers/profileController';
 import { authenticateToken } from '../middleware/authMiddleware';
@@ -24,5 +25,6 @@ router.put(
   updateProfile
 );
 router.get('/tags', authenticateToken, getTaggedPhotos);
+router.get('/heatmap', authenticateToken, getHeatmap);
 
 export default router;
