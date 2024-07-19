@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
+import { config } from '../utils/configDev';
 
 const uploadPhoto = async (req: Request, res: Response) => {
   const { location } = req.body;
@@ -28,7 +29,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
 
   try {
     const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream({ folder: 'photos', use_filename: true },
+      cloudinary.uploader.upload_stream({ folder: 'photos', transformation: config.cloudinary.photoTransformation },
         (error, result) => {
           if (error) {
             reject(error);

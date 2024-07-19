@@ -3,6 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { comparePassword } from '../utils/authUtils';
 import { createAccessToken, createRefreshToken } from '../utils/tokenUtils';
 import User from '../models/userModel'; 
+import { config } from '../utils/configDev';
 
 // Register endpoint
 const register = async (req: Request, res: Response) => {
@@ -30,7 +31,7 @@ const register = async (req: Request, res: Response) => {
     if (req.file) {
       const uploadResponse = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
-          { folder: 'profile_pictures' },
+          { folder: 'profile_pictures', transformation: config.cloudinary.profilePictureTransformation },
           (error, result) => {
             if (error) {
               reject(error);

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/userModel';
 import { v2 as cloudinary } from 'cloudinary';
+import { config } from '../utils/configDev';
 
 // Get profile
 async function getProfile(req: Request, res: Response) {
@@ -43,7 +44,7 @@ const updateProfile = async (req: Request, res: Response) => {
       // Upload new profile picture to Cloudinary
       const uploadResponse = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
-          { folder: 'profile_pictures' },
+          { folder: 'profile_pictures', transformation: config.cloudinary.profilePictureTransformation },
           (error, result) => {
             if (error) {
               reject(error);
