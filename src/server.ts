@@ -19,6 +19,7 @@ mongoose
 app.use('/api/v1', v1Router);
 
 if (isProduction) {
+  // Using Render for hosting (automatically HTTPS)
   app.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}`);
   });

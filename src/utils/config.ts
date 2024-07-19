@@ -20,7 +20,7 @@ const config = {
       { fetch_format: 'auto' }, // Optimize format
     ],
     photoTransformation: [
-      { width: 1200, height: 1200, crop: 'fill' }, // Standardize dimensions
+      { width: 1200, height: 900, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],

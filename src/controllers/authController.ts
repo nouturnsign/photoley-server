@@ -7,7 +7,7 @@ import { config } from '../utils/config';
 
 // Register endpoint
 const register = async (req: Request, res: Response) => {
-  const { email, password, username, profilePicture } = req.body;
+  const { email, password, username } = req.body;
 
   if (!email || !password || !username) {
     return res
