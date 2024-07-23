@@ -27,7 +27,7 @@ const register = async (req: Request, res: Response) => {
 
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-      return res.status(400).json({ message: 'Username already exists' });
+      return res.status(409).json({ message: 'Username already exists' });
     }
 
     // Upload profile picture to Cloudinary
@@ -110,7 +110,7 @@ const login = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // Compare the provided password with the stored hash
