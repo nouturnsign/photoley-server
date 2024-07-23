@@ -138,7 +138,15 @@ const login = async (req: Request, res: Response) => {
 
 // Validate token endpoint
 const validateToken = async (req: Request, res: Response) => {
-  return res.sendStatus(200);
+  try {
+    const userExists = await User.exists({ _id: res.locals.userId });
+    if (!userExists) {
+      return res.status(401).json({ message: 'Invalid refresh token' });
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 export { register, login, validateToken };
