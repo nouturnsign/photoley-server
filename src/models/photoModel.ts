@@ -22,6 +22,19 @@ const photoSchema = new Schema<IPhoto>({
   tags: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
+photoSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    return {
+      id: ret._id,
+      location: ret.location,
+      userId: ret.userId,
+      photoUrl: ret.photoUrl,
+      createdAt: ret.createdAt,
+      tags: ret.tags,
+    };
+  },
+});
+
 // Create a geospatial index on the location field
 photoSchema.index({ location: '2dsphere' });
 
