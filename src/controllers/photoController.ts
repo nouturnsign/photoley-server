@@ -85,7 +85,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
 
 const getPhotos = async (req: Request, res: Response) => {
   const skip = parseInt(req.query.skip as string) || 0;
-  const limit = parseInt(req.query.limit as string) || 10;
+  const limit = Math.min(parseInt(req.query.limit as string) || 10, 30);
 
   try {
     const photos = await Photo.find()
