@@ -10,7 +10,7 @@ async function getProfile(req: Request, res: Response) {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json(user);
+    res.json(user.toJSON());
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal server error' });
@@ -87,7 +87,7 @@ const updateProfile = async (req: Request, res: Response) => {
       );
     }
 
-    res.json(updatedUser);
+    res.json(user.toJSON());
   } catch (err) {
     if (err instanceof Error) {
       res
