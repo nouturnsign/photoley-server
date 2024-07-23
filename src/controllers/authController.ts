@@ -150,4 +150,9 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-export { register, login };
+// Validate token endpoint
+const validateToken = async (req: Request, res: Response) => {
+  return res.sendStatus(200);
+};
+
+export { register, login, validateToken };
