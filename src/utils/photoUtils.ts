@@ -1,18 +1,30 @@
 import Photo from '../models/photoModel';
 
-const getHeatmapData = async () => {
+const getHeatmapData = async (
+  longitude: number,
+  latitude: number,
+  minDistance: number,
+  maxDistance: number
+) => {
   const heatmapData = await Photo.aggregate([
     {
-      $group: {
-        _id: '$location',
-        tagCount: { $sum: { $size: { $ifNull: ['$tags', []] } } }, // Assuming tags is an array
+      $geoNear: {
+        near: {
+          type: 'Point',
+          coordinates: [longitude, latitude], // [longitude, latitude]
+        },
+        distanceField: 'distance',
+        spherical: true,
+        minDistance: minDistance,
+        maxDistance: maxDistance,
       },
     },
     {
       $project: {
         _id: 0,
-        location: '$_id',
-        tagCount: 1,
+        location: '$location',
+        tagCount: { $size: { $ifNull: ['$tags', []] } },
+        distance: 1,
       },
     },
   ]);
