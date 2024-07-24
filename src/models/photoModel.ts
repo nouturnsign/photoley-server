@@ -24,6 +24,13 @@ const photoSchema = new Schema<IPhoto>({
 
 photoSchema.set('toJSON', {
   transform: (doc, ret) => {
+    let docTyped = doc as IPhoto;
+    if (docTyped.populated('userId')) {
+      ret.userId = docTyped.userId;
+    }
+    if (docTyped.populated('tags')) {
+      ret.tags = docTyped.tags;
+    }
     return {
       id: ret._id,
       location: ret.location,
