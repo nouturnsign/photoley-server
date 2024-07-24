@@ -32,12 +32,14 @@ photoSchema.set('toJSON', {
       ret.tags = docTyped.tags;
     }
     return {
-      id: ret._id,
-      location: ret.location,
-      userId: ret.userId,
-      photoUrl: ret.photoUrl,
-      createdAt: ret.createdAt,
-      tags: ret.tags,
+      photo: {
+        id: ret._id,
+        location: ret.location,
+        userId: ret.userId,
+        photoUrl: ret.photoUrl,
+        createdAt: ret.createdAt,
+        tags: ret.tags,
+      },
     };
   },
 });
