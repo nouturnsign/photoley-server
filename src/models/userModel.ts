@@ -8,6 +8,7 @@ interface IUser extends Document {
   password: string;
   username: string;
   profilePicture: string;
+  sticker: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,7 +18,8 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     username: { type: String, required: true, unique: true },
-    profilePicture: { type: String },
+    profilePicture: { type: String, required: true },
+    sticker: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -32,6 +34,7 @@ userSchema.set('toJSON', {
         email: ret.email,
         username: ret.username,
         profilePicture: ret.profilePicture,
+        sticker: ret.sticker,
         createdAt: ret.createdAt,
         updatedAt: ret.updatedAt,
       },

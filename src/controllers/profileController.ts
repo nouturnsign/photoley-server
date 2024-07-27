@@ -20,7 +20,7 @@ async function getProfile(req: Request, res: Response) {
 // Edit profile
 const updateProfile = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
-  const { username } = req.body;
+  const { username, sticker } = req.body;
 
   try {
     // Find the current user
@@ -38,7 +38,7 @@ const updateProfile = async (req: Request, res: Response) => {
     }
 
     // Prepare updated fields
-    let updatedFields: Partial<IUser> = { username };
+    let updatedFields: Partial<IUser> = { username, sticker };
     let oldProfilePicturePublicId: string | null = null;
     if (req.file) {
       // Upload new profile picture to Cloudinary
@@ -87,7 +87,7 @@ const updateProfile = async (req: Request, res: Response) => {
       );
     }
 
-    res.json(user.toJSON());
+    res.json(updatedUser.toJSON());
   } catch (err) {
     if (err instanceof Error) {
       res

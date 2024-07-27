@@ -7,12 +7,12 @@ import { config, isProduction } from '../utils/config';
 
 // Register endpoint
 const register = async (req: Request, res: Response) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, sticker } = req.body;
 
-  if (!email || !password || !username) {
+  if (!email || !password || !username || !sticker) {
     return res
       .status(400)
-      .json({ message: 'Email, password, and username are required' });
+      .json({ message: 'Email, password, username, and sticker are required' });
   }
 
   try {
@@ -55,10 +55,11 @@ const register = async (req: Request, res: Response) => {
 
     // Create a new user
     const newUser = new User({
-      email,
-      password,
-      username,
+      email: email,
+      password: password,
+      username: username,
       profilePicture: profilePictureUrl,
+      sticker: sticker,
     });
 
     // Save the user to the database
