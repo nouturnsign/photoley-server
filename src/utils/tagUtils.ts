@@ -63,7 +63,7 @@ const getHeatmapData = async (
   minDistance: number,
   maxDistance: number
 ) => {
-  const heatmapData = await Photo.aggregate([
+  const heatmapData = await Tag.aggregate([
     {
       $geoNear: {
         near: {
@@ -77,10 +77,16 @@ const getHeatmapData = async (
       },
     },
     {
+      $group: {
+        _id: '$location', // Group by location
+        count: { $sum: 1 }, // Count the number of tags per location
+      },
+    },
+    {
       $project: {
         _id: 0,
-        location: '$location',
-        tagCount: { $size: { $ifNull: ['$taggedUsers', []] } },
+        location: '$_id', // Rename _id to location
+        tagCount: '$count', // Rename count to tagCount
       },
     },
   ]);

@@ -44,9 +44,6 @@ photoSchema.set('toJSON', {
   },
 });
 
-// Create a geospatial index on the location field
-photoSchema.index({ location: '2dsphere' });
-
 const Photo = mongoose.model<IPhoto>('Photo', photoSchema, 'Photos');
 
 export default Photo;
