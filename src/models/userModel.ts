@@ -9,6 +9,8 @@ interface IUser extends Document {
   username: string;
   profilePicture: string;
   sticker: string;
+  taggedCount: number;
+  successCount: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +22,8 @@ const userSchema = new Schema<IUser>(
     username: { type: String, required: true, unique: true },
     profilePicture: { type: String, required: true },
     sticker: { type: String, required: true },
+    taggedCount: { type: Number, required: true, default: 0 },
+    successCount: { type: Number, required: true, default: 0 },
   },
   {
     timestamps: true,
@@ -29,15 +33,15 @@ const userSchema = new Schema<IUser>(
 userSchema.set('toJSON', {
   transform: (doc, ret) => {
     return {
-      user: {
-        id: ret._id,
-        email: ret.email,
-        username: ret.username,
-        profilePicture: ret.profilePicture,
-        sticker: ret.sticker,
-        createdAt: ret.createdAt,
-        updatedAt: ret.updatedAt,
-      },
+      id: ret._id,
+      email: ret.email,
+      username: ret.username,
+      profilePicture: ret.profilePicture,
+      sticker: ret.sticker,
+      createdAt: ret.createdAt,
+      updatedAt: ret.updatedAt,
+      taggedCount: ret.taggedCount,
+      successCount: ret.successCount,
     };
   },
 });

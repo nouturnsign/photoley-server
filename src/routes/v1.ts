@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { register, login, validateToken } from '../controllers/authController';
 import {
-  getPhotos,
+  getFeed,
   uploadPhoto,
   getTaggedPhotos,
   getHeatmap,
@@ -16,7 +16,7 @@ const router = Router();
 router.post('/register', upload.single('profilePicture'), register);
 router.post('/login', login);
 router.get('/validate', authenticateToken, validateToken);
-router.get('/photo', authenticateToken, getPhotos);
+router.get('/feed', authenticateToken, getFeed);
 router.post('/photo', authenticateToken, upload.single('photo'), uploadPhoto);
 router.get('/profile', authenticateToken, getProfile);
 router.put(

@@ -1,5 +1,9 @@
 import Photo from '../models/photoModel';
 
+const getStickerPublicID = (name: string) => {
+  return 'stickers:' + name;
+};
+
 const getHeatmapData = async (
   longitude: number,
   latitude: number,
@@ -32,4 +36,4 @@ const getHeatmapData = async (
   return heatmapData;
 };
 
-export { getHeatmapData };
+export { getStickerPublicID, getHeatmapData };

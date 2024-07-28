@@ -1,45 +1,50 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 interface IPhoto extends Document {
-  photoUrl: string;
+  url: string;
+  pictureTaker: mongoose.Schema.Types.ObjectId;
+  taggedUsers: mongoose.Schema.Types.ObjectId[];
+  isTagComplete: boolean;
   location: {
     type: string;
     coordinates: [number, number];
   };
-  userId: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
-  tags: mongoose.Schema.Types.ObjectId[];
 }
 
 const photoSchema = new Schema<IPhoto>({
-  photoUrl: { type: String, required: true },
+  url: { type: String, required: true },
+  pictureTaker: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  taggedUsers: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
+  isTagComplete: { type: Boolean, required: true },
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },
   },
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now, index: true },
-  tags: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 photoSchema.set('toJSON', {
   transform: (doc, ret) => {
     let docTyped = doc as IPhoto;
-    if (docTyped.populated('userId')) {
-      ret.userId = docTyped.userId;
+    if (docTyped.populated('pictureTaker')) {
+      ret.pictureTaker = docTyped.pictureTaker;
     }
-    if (docTyped.populated('tags')) {
-      ret.tags = docTyped.tags;
+    if (docTyped.populated('taggedUsers')) {
+      ret.taggedUsers = docTyped.taggedUsers;
     }
     return {
-      photo: {
-        id: ret._id,
-        location: ret.location,
-        userId: ret.userId,
-        photoUrl: ret.photoUrl,
-        createdAt: ret.createdAt,
-        tags: ret.tags,
-      },
+      id: ret._id,
+      url: ret.url,
+      pictureTaker: ret.pictureTaker,
+      taggedUsers: ret.taggedUsers,
+      isTagComplete: ret.isTagComplete,
+      location: ret.location,
+      createdAt: ret.createdAt,
     };
   },
 });

@@ -3,11 +3,17 @@ import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/config';
 import { resolveUsernamesToIds } from '../utils/userUtils';
-import { getHeatmapData } from '../utils/photoUtils';
+import { getHeatmapData, getStickerPublicID } from '../utils/photoUtils';
+import User from '../models/userModel';
+
+interface IStickerPosition {
+  x: number;
+  y: number;
+}
 
 const uploadPhoto = async (req: Request, res: Response) => {
-  const { location, tags } = req.body;
-  const userId = res.locals.userId;
+  const { location, taggedUsers, stickerPositions } = req.body;
+  const pictureTaker = res.locals.userId;
 
   if (!req.file) {
     return res.status(400).json({ message: 'Photo is required' });
@@ -28,15 +34,28 @@ const uploadPhoto = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Invalid location format' });
   }
 
-  let parsedTags;
+  let parsedTaggedUsers: string[];
   try {
-    parsedTags = JSON.parse(tags);
+    parsedTaggedUsers = JSON.parse(taggedUsers);
   } catch (error) {
-    return res.status(400).json({ message: 'Invalid tags format' });
+    return res.status(400).json({ message: 'Invalid tagged users format' });
   }
 
-  if (!parsedTags) {
-    return res.status(400).json({ message: 'Invalid tags format' });
+  if (!parsedTaggedUsers) {
+    return res.status(400).json({ message: 'Invalid tagged users format' });
+  }
+
+  let parsedStickerPositions: IStickerPosition[];
+  try {
+    parsedStickerPositions = JSON.parse(stickerPositions);
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: 'Invalid sticker positions format' });
+  }
+
+  if (!parsedStickerPositions) {
+    return res.status(400).json({ message: 'Invalid tagged users format' });
   }
 
   const geoLocation = {
@@ -45,16 +64,51 @@ const uploadPhoto = async (req: Request, res: Response) => {
   };
 
   try {
+    const tagIds = parsedTaggedUsers
+      ? await resolveUsernamesToIds(parsedTaggedUsers)
+      : [];
+    const users = await User.find({ _id: { $in: tagIds } });
+    const userStickers = users.map((user) => user.sticker);
+    const stickerCount = userStickers.length;
+    if (stickerCount != parsedStickerPositions.length) {
+      return res
+        .status(400)
+        .json({ message: 'Number of users and stickers should match' });
+    }
+
+    const stickerTransformations: any[] = [];
+    for (let i = 0; i < stickerCount; i++) {
+      const stickerID = getStickerPublicID(userStickers[i] as string);
+      const position = parsedStickerPositions[i] as IStickerPosition;
+      stickerTransformations.push({
+        overlay: stickerID,
+        gravity: 'north_west',
+        width: config.cloudinary.stickerSize,
+        height: config.cloudinary.stickerSize,
+        x: position.x,
+        y: position.y,
+      });
+    }
+    const transformations = ([] as any[]).concat(
+      config.cloudinary.photoPreTransformation,
+      stickerTransformations,
+      config.cloudinary.photoPostTransformation
+    );
+
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
             folder: 'photos',
-            transformation: config.cloudinary.photoTransformation,
+            transformation: transformations,
           },
           (error, result) => {
             if (error) {
               reject(error);
+              return res.status(500).json({
+                message: 'Failed to upload photo',
+                error: error,
+              });
             } else {
               resolve(result);
             }
@@ -63,16 +117,21 @@ const uploadPhoto = async (req: Request, res: Response) => {
         .end(req.file?.buffer);
     });
 
-    const tagIds = parsedTags ? await resolveUsernamesToIds(parsedTags) : [];
-
     const newPhoto = new Photo({
-      photoUrl: (result as any).secure_url,
+      url: (result as any).secure_url,
+      pictureTaker: pictureTaker,
+      taggedUsers: tagIds,
+      isTagComplete: false,
       location: geoLocation,
-      userId,
-      tags: tagIds,
     });
 
     await newPhoto.save();
+
+    // Update tagged count for users
+    tagIds.forEach(async (userId) => {
+      await User.findByIdAndUpdate(userId, { $inc: { taggedCount: 1 } });
+    });
+
     res.status(201).json(newPhoto);
   } catch (err) {
     if (err instanceof Error) {
@@ -83,7 +142,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
   }
 };
 
-const getPhotos = async (req: Request, res: Response) => {
+const getFeed = async (req: Request, res: Response) => {
   const skip = parseInt(req.query.skip as string) || 0;
   const limit = Math.min(parseInt(req.query.limit as string) || 10, 30);
 
@@ -92,16 +151,16 @@ const getPhotos = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .skip(skip)
       .limit(limit)
-      .populate('userId', 'username profilePicture')
-      .populate('tags', 'username profilePicture');
+      .populate('pictureTaker', 'username profilePicture')
+      .populate('taggedUsers', 'username profilePicture');
 
     const totalPhotos = await Photo.countDocuments();
 
     res.json({
-      photos,
+      photos: photos,
       total: totalPhotos,
-      skip,
-      limit,
+      skip: skip,
+      limit: limit,
     });
   } catch (err) {
     if (err instanceof Error) {
@@ -159,4 +218,4 @@ const getHeatmap = async (req: Request, res: Response) => {
   }
 };
 
-export { uploadPhoto, getPhotos, getTaggedPhotos, getHeatmap };
+export { uploadPhoto, getFeed, getTaggedPhotos, getHeatmap };

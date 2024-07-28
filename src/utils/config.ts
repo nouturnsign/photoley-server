@@ -18,11 +18,14 @@ const config = {
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
-    photoTransformation: [
-      { width: 1200, height: 900, crop: 'fill' }, // Standardize dimensions
+    photoPreTransformation: [
+      { width: 900, height: 1200, crop: 'fill' }, // Standardize dimensions
+    ],
+    photoPostTransformation: [
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
+    stickerSize: 4, // How much to scale sticker pixel sizes by
   },
   jwt: {
     privateKeyPath: './private.pem',
