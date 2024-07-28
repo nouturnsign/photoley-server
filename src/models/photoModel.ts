@@ -5,10 +5,6 @@ interface IPhoto extends Document {
   pictureTaker: Types.ObjectId;
   taggedUsers: Types.ObjectId[];
   isTagComplete: boolean;
-  location: {
-    type: string;
-    coordinates: [number, number];
-  };
   createdAt: Date;
 }
 
@@ -20,10 +16,6 @@ const photoSchema = new Schema<IPhoto>({
     required: true,
   },
   taggedUsers: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
-  location: {
-    type: { type: String, enum: ['Point'], required: true },
-    coordinates: { type: [Number], required: true },
-  },
   createdAt: { type: Date, required: true, default: Date.now, index: true },
 });
 
@@ -42,7 +34,6 @@ photoSchema.set('toJSON', {
       pictureTaker: ret.pictureTaker,
       taggedUsers: ret.taggedUsers,
       isTagComplete: ret.isTagComplete,
-      location: ret.location,
       createdAt: ret.createdAt,
     };
   },

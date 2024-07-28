@@ -59,6 +59,11 @@ const uploadPhoto = async (req: Request, res: Response) => {
       .json({ message: 'Duplicate tagged users are not allowed' });
   }
 
+  const geoLocation = {
+    type: 'Point',
+    coordinates: [parsedLocation.lon, parsedLocation.lat],
+  };
+
   try {
     const users = await User.find({ _id: { $in: parsedTaggedUsers } });
     const userStickers = users.map((user) => user.sticker);
@@ -119,6 +124,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
           creatorId: taggedUserId,
           taggedUserId: pictureTaker,
           isCompleted: false,
+          location: geoLocation,
         });
 
         if (existingTag) {
@@ -144,7 +150,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
 
         if (previousTag) {
           await Tag.findByIdAndUpdate(previousTag._id, {
-            $set: { createdAt: Date.now() },
+            $set: { createdAt: Date.now(), location: geoLocation },
           });
           sendNotification(taggedUserId, 'You have been tagged in a photo!');
           return;
@@ -156,6 +162,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
           taggedUserId: taggedUserId,
           createdAt: currentTimestamp,
           isCompleted: false,
+          location: geoLocation,
         });
         await newTag.save();
         sendNotification(taggedUserId, 'You have been tagged in a photo!');
@@ -166,10 +173,6 @@ const uploadPhoto = async (req: Request, res: Response) => {
       url: (result as any).secure_url,
       pictureTaker,
       taggedUsers: parsedTaggedUsers,
-      location: {
-        type: 'Point',
-        coordinates: [parsedLocation.lon, parsedLocation.lat],
-      },
     });
     await newPhoto.save();
 
