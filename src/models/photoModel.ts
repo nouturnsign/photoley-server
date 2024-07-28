@@ -2,8 +2,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 interface IPhoto extends Document {
   url: string;
-  pictureTaker: mongoose.Schema.Types.ObjectId;
-  taggedUsers: mongoose.Schema.Types.ObjectId[];
+  pictureTaker: Schema.Types.ObjectId;
+  taggedUsers: Schema.Types.ObjectId[];
   isTagComplete: boolean;
   location: {
     type: string;
@@ -15,7 +15,7 @@ interface IPhoto extends Document {
 const photoSchema = new Schema<IPhoto>({
   url: { type: String, required: true },
   pictureTaker: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
@@ -25,7 +25,7 @@ const photoSchema = new Schema<IPhoto>({
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },
   },
-  createdAt: { type: Date, default: Date.now, index: true },
+  createdAt: { type: Date, required: true, default: Date.now, index: true },
 });
 
 photoSchema.set('toJSON', {

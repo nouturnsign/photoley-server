@@ -86,6 +86,9 @@ const uploadPhoto = async (req: Request, res: Response) => {
     const tagIds = parsedTaggedUsers
       ? await resolveUsernamesToIds(parsedTaggedUsers)
       : [];
+    if (tagIds.includes(pictureTaker)) {
+      return res.status(400).json({ message: 'Cannot tag yourself' });
+    }
     const users = await User.find({ _id: { $in: tagIds } });
     const userStickers = users.map((user) => user.sticker);
     const stickerCount = userStickers.length;
@@ -211,14 +214,26 @@ const getFeed = async (req: Request, res: Response) => {
 };
 
 const getTaggedPhotos = async (req: Request, res: Response) => {
+  const skip = parseInt(req.query.skip as string) || 0;
+  const limit = Math.min(parseInt(req.query.limit as string) || 10, 30);
+
   try {
     const userId = res.locals.userId;
 
-    const photos = await Photo.find({ tags: userId })
-      .populate('userId', 'username profilePicture')
-      .populate('tags', 'username profilePicture');
+    const earliestValidDate = new Date(Date.now() - config.tagDuration);
+    const photos = await Photo.find({
+      taggedUsers: userId,
+      isTagComplete: false,
+      createdAt: { $gte: earliestValidDate },
+    })
+      .sort({ createdAt: 1 }) // Sort by createdAt in ascending order
+      .skip(skip)
+      .limit(limit)
+      .populate('pictureTaker', 'username profilePicture');
 
-    res.json(photos);
+    const totalPhotos = await Photo.countDocuments();
+
+    res.json({ photos: photos, total: totalPhotos, skip: skip, limit: limit });
   } catch (err) {
     res.status(500).json({ message: 'Failed to retrieve tagged photos' });
   }
