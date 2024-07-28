@@ -65,4 +65,11 @@ const getHeatmap = async (req: Request, res: Response) => {
   }
 };
 
-export { getTags, getHeatmap };
+const getStickers = async (req: Request, res: Response) => {
+  const stickers = {
+    stickers: config.cloudinary.stickers,
+  };
+  res.json(stickers);
+};
+
+export { getTags, getHeatmap, getStickers };

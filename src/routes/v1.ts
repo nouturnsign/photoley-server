@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { register, login, validateToken } from '../controllers/authController';
 import { getFeed, uploadPhoto } from '../controllers/photoController';
 import { getProfile, updateProfile } from '../controllers/profileController';
-import { getHeatmap, getTags } from '../controllers/tagController';
+import { getHeatmap, getStickers, getTags } from '../controllers/tagController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware';
 
@@ -23,5 +23,6 @@ router.put(
 );
 router.get('/tags', authenticateToken, getTags);
 router.get('/heatmap', authenticateToken, getHeatmap);
+router.get('/stickers', getStickers);
 
 export default router;
