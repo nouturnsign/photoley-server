@@ -1,12 +1,8 @@
 import { Router } from 'express';
 import { register, login, validateToken } from '../controllers/authController';
-import {
-  getFeed,
-  uploadPhoto,
-  getHeatmap,
-} from '../controllers/photoController';
+import { getFeed, uploadPhoto } from '../controllers/photoController';
 import { getProfile, updateProfile } from '../controllers/profileController';
-import { getTags } from '../controllers/tagController';
+import { getHeatmap, getTags } from '../controllers/tagController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware';
 

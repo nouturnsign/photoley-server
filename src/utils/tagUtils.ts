@@ -1,74 +1,7 @@
-import Photo, { IStickerPosition } from '../models/photoModel';
-import User from '../models/userModel';
-import Tag from '../models/tagModel';
 import { config } from './config';
-
-const getStickerPublicID = (name: string) => {
-  return 'stickers:' + name;
-};
-
-const sendNotification = (userId: string, message: string) => {
-  // temporary implementation without APNs
-  console.log(`Notification sent to user ${userId}: ${message}`);
-};
-
-const parseRequestBody = (body: any) => {
-  try {
-    const location = JSON.parse(body.location);
-    const taggedUsers = JSON.parse(body.taggedUsers);
-    const stickerPositions = JSON.parse(body.stickerPositions);
-
-    if (
-      typeof location.lat !== 'number' ||
-      typeof location.lon !== 'number' ||
-      !Array.isArray(taggedUsers) ||
-      !Array.isArray(stickerPositions)
-    ) {
-      throw new Error('Invalid input format');
-    }
-
-    return {
-      location,
-      taggedUsers,
-      stickerPositions,
-    };
-  } catch (error) {
-    throw new Error('Invalid input format');
-  }
-};
-
-const validateTaggedUsers = async (
-  taggedUsers: string[],
-  stickerPositions: IStickerPosition[]
-) => {
-  const uniqueTaggedUsers = Array.from(new Set(taggedUsers));
-  if (uniqueTaggedUsers.length !== taggedUsers.length) {
-    throw new Error('Tagged users should be unique');
-  }
-
-  const users = await User.find({ _id: { $in: uniqueTaggedUsers } });
-  const userStickers = users.map((user) => user.sticker);
-
-  if (userStickers.length !== stickerPositions.length) {
-    throw new Error('Number of users and stickers should match');
-  }
-
-  return userStickers;
-};
-
-const buildStickerTransformations = (
-  userStickers: string[],
-  stickerPositions: IStickerPosition[]
-) => {
-  return userStickers.map((stickerID, i) => ({
-    overlay: getStickerPublicID(stickerID),
-    gravity: 'north_west',
-    width: config.cloudinary.stickerSize,
-    height: config.cloudinary.stickerSize,
-    x: stickerPositions[i].x,
-    y: stickerPositions[i].y,
-  }));
-};
+import Photo from '../models/photoModel';
+import Tag from '../models/tagModel';
+import { sendNotification } from './photoUtils';
 
 const handleTags = async (
   taggedUsers: string[],
@@ -155,10 +88,4 @@ const getHeatmapData = async (
   return heatmapData;
 };
 
-export {
-  getStickerPublicID,
-  sendNotification,
-  parseRequestBody,
-  validateTaggedUsers,
-  buildStickerTransformations,
-};
+export { handleTags, getHeatmapData };
