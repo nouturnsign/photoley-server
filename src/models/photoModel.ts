@@ -1,5 +1,10 @@
 import mongoose, { Types, Schema, Document } from 'mongoose';
 
+interface IStickerPosition {
+  x: number;
+  y: number;
+}
+
 interface IPhoto extends Document {
   url: string;
   pictureTaker: Types.ObjectId;
@@ -45,4 +50,4 @@ photoSchema.index({ location: '2dsphere' });
 const Photo = mongoose.model<IPhoto>('Photo', photoSchema, 'Photos');
 
 export default Photo;
-export { IPhoto };
+export { IStickerPosition, IPhoto };

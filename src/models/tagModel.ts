@@ -1,6 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { Types } from 'mongoose';
 
+interface ILocation {
+  lat: number;
+  lon: number;
+}
+
 interface ITag extends Document {
   creatorId: Types.ObjectId;
   taggedUserId: Types.ObjectId;
@@ -24,4 +29,6 @@ const tagSchema = new Schema<ITag>({
 });
 
 const Tag = mongoose.model<ITag>('Tag', tagSchema, 'Tags');
+
 export default Tag;
+export { ILocation };
