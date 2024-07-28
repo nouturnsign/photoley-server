@@ -68,6 +68,7 @@ const getHeatmap = async (req: Request, res: Response) => {
 const getStickers = async (req: Request, res: Response) => {
   const stickers = {
     stickers: config.cloudinary.stickers,
+    updatedAt: config.deployedAt,
   };
   res.json(stickers);
 };

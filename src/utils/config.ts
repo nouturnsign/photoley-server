@@ -43,6 +43,7 @@ const config = {
     stickers: stickers,
     stickerSize: 4, // How much to scale sticker pixel sizes by
   },
+  deployedAt: new Date(),
   jwt: {
     privateKeyPath: './private.pem',
     publicKeyPath: './public.pem',
