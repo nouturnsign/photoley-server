@@ -27,8 +27,7 @@ const getHeatmapData = async (
       $project: {
         _id: 0,
         location: '$location',
-        tagCount: { $size: { $ifNull: ['$tags', []] } },
-        distance: 1,
+        tagCount: { $size: { $ifNull: ['$taggedUsers', []] } },
       },
     },
   ]);
