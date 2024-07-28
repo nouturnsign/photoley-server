@@ -2,17 +2,26 @@ import { Request, Response } from 'express';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/config';
-import { resolveUsernamesToIds } from '../utils/userUtils';
-import { getHeatmapData, getStickerPublicID } from '../utils/photoUtils';
+import {
+  getHeatmapData,
+  getStickerPublicID,
+  sendNotification,
+} from '../utils/photoUtils';
 import User from '../models/userModel';
+import Tag from '../models/tagModel';
 
 interface IStickerPosition {
   x: number;
   y: number;
 }
 
+interface ILocation {
+  lat: number;
+  lon: number;
+}
+
 const uploadPhoto = async (req: Request, res: Response) => {
-  const { location, taggedUsers, stickerPositions, originalPhoto } = req.body;
+  const { location, taggedUsers, stickerPositions } = req.body;
   const pictureTaker = res.locals.userId;
 
   const currentTimestamp = Date.now();
@@ -21,75 +30,37 @@ const uploadPhoto = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Photo is required' });
   }
 
-  let parsedLocation;
+  let parsedLocation: ILocation,
+    parsedTaggedUsers: string[],
+    parsedStickerPositions: IStickerPosition[];
+
   try {
     parsedLocation = JSON.parse(location);
+    parsedTaggedUsers = JSON.parse(taggedUsers);
+    parsedStickerPositions = JSON.parse(stickerPositions);
   } catch (error) {
-    return res.status(400).json({ message: 'Invalid location format' });
+    return res.status(400).json({ message: 'Invalid input format' });
   }
 
   if (
     !parsedLocation ||
     typeof parsedLocation.lat !== 'number' ||
-    typeof parsedLocation.lon !== 'number'
+    typeof parsedLocation.lon !== 'number' ||
+    !Array.isArray(parsedTaggedUsers) ||
+    !Array.isArray(parsedStickerPositions)
   ) {
-    return res.status(400).json({ message: 'Invalid location format' });
+    return res.status(400).json({ message: 'Invalid input format' });
   }
 
-  let parsedTaggedUsers: string[];
-  try {
-    parsedTaggedUsers = JSON.parse(taggedUsers);
-  } catch (error) {
-    return res.status(400).json({ message: 'Invalid tagged users format' });
-  }
-
-  if (!parsedTaggedUsers) {
-    return res.status(400).json({ message: 'Invalid tagged users format' });
-  }
-
-  let parsedStickerPositions: IStickerPosition[];
-  try {
-    parsedStickerPositions = JSON.parse(stickerPositions);
-  } catch (error) {
+  const uniqueTaggedUsers = Array.from(new Set(parsedTaggedUsers));
+  if (uniqueTaggedUsers.length !== parsedTaggedUsers.length) {
     return res
       .status(400)
-      .json({ message: 'Invalid sticker positions format' });
+      .json({ message: 'Duplicate tagged users are not allowed' });
   }
-
-  if (!parsedStickerPositions) {
-    return res.status(400).json({ message: 'Invalid tagged users format' });
-  }
-
-  let taggedByPhoto;
-  try {
-    taggedByPhoto =
-      originalPhoto && originalPhoto != ''
-        ? await Photo.findById(originalPhoto)
-        : null;
-  } catch (error) {
-    return res.status(400).json({ message: 'Invalid tag photo ID' });
-  }
-
-  if (originalPhoto && !taggedByPhoto) {
-    return res.status(400).json({ message: 'Invalid tag photo ID' });
-  }
-  if (taggedByPhoto && taggedByPhoto.isTagComplete) {
-    return res.status(400).json({ message: 'Photo was already tagged' });
-  }
-
-  const geoLocation = {
-    type: 'Point',
-    coordinates: [parsedLocation.lon, parsedLocation.lat],
-  };
 
   try {
-    const tagIds = parsedTaggedUsers
-      ? await resolveUsernamesToIds(parsedTaggedUsers)
-      : [];
-    if (tagIds.includes(pictureTaker)) {
-      return res.status(400).json({ message: 'Cannot tag yourself' });
-    }
-    const users = await User.find({ _id: { $in: tagIds } });
+    const users = await User.find({ _id: { $in: parsedTaggedUsers } });
     const userStickers = users.map((user) => user.sticker);
     const stickerCount = userStickers.length;
     if (stickerCount != parsedStickerPositions.length) {
@@ -111,6 +82,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
         y: position.y,
       });
     }
+
     const transformations = ([] as any[]).concat(
       config.cloudinary.photoPreTransformation,
       stickerTransformations,
@@ -139,38 +111,65 @@ const uploadPhoto = async (req: Request, res: Response) => {
         .end(req.file?.buffer);
     });
 
-    let isTagComplete = false;
-    if (taggedByPhoto) {
-      const timeDifference =
-        currentTimestamp - taggedByPhoto.createdAt.valueOf();
-      if (timeDifference < config.tagDuration) {
-        await User.findByIdAndUpdate(pictureTaker, {
-          $inc: { successCount: 1 },
+    // Check existing tags and handle them
+    await Promise.all(
+      parsedTaggedUsers.map(async (taggedUserId: string) => {
+        // from tagged to pictureTaker
+        const existingTag = await Tag.findOne({
+          creatorId: taggedUserId,
+          taggedUserId: pictureTaker,
+          isCompleted: false,
         });
-        await Photo.findByIdAndUpdate(originalPhoto, {
-          $set: { isTagComplete: true },
+
+        if (existingTag) {
+          // Check if the tag has expired
+          const timeDifference =
+            currentTimestamp - existingTag.createdAt.getTime();
+          if (timeDifference < config.tagDuration) {
+            // Complete the existing tag
+            await Tag.findByIdAndUpdate(existingTag._id, {
+              $set: { isCompleted: true },
+            });
+            sendNotification(taggedUserId, 'Your tag has been completed!');
+          }
+          return;
+        }
+
+        // from pictureTaker to tagged
+        const previousTag = await Tag.findOne({
+          creatorId: pictureTaker,
+          taggedUserId: taggedUserId,
+          isCompleted: false,
         });
-        isTagComplete = true;
-      } else {
-        isTagComplete = false;
-      }
-    } else {
-      await Promise.all(
-        tagIds.map(async (taggedUserId) => {
-          await User.findByIdAndUpdate(taggedUserId, {
-            $inc: { taggedCount: 1 },
+
+        if (previousTag) {
+          await Tag.findByIdAndUpdate(previousTag._id, {
+            $set: { createdAt: Date.now() },
           });
-        })
-      );
-      isTagComplete = false;
-    }
+          sendNotification(taggedUserId, 'You have been tagged in a photo!');
+          return;
+        }
+
+        // otherwise, create a new tag
+        const newTag = new Tag({
+          creatorId: pictureTaker,
+          taggedUserId: taggedUserId,
+          createdAt: currentTimestamp,
+          isCompleted: false,
+        });
+        await newTag.save();
+        sendNotification(taggedUserId, 'You have been tagged in a photo!');
+      })
+    );
 
     const newPhoto = new Photo({
       url: (result as any).secure_url,
-      pictureTaker: pictureTaker,
-      taggedUsers: tagIds,
-      isTagComplete: isTagComplete,
-      location: geoLocation,
+      pictureTaker,
+      taggedUsers: parsedTaggedUsers,
+      location: {
+        type: 'Point',
+        coordinates: [parsedLocation.lon, parsedLocation.lat],
+      },
     });
     await newPhoto.save();
 

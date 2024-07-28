@@ -1,9 +1,9 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Types, Schema, Document } from 'mongoose';
 
 interface IPhoto extends Document {
   url: string;
-  pictureTaker: Schema.Types.ObjectId;
-  taggedUsers: Schema.Types.ObjectId[];
+  pictureTaker: Types.ObjectId;
+  taggedUsers: Types.ObjectId[];
   isTagComplete: boolean;
   location: {
     type: string;
@@ -20,7 +20,6 @@ const photoSchema = new Schema<IPhoto>({
     required: true,
   },
   taggedUsers: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
-  isTagComplete: { type: Boolean, required: true },
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },

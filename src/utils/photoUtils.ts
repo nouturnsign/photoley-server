@@ -4,6 +4,11 @@ const getStickerPublicID = (name: string) => {
   return 'stickers:' + name;
 };
 
+const sendNotification = (userId: string, message: string) => {
+  // temporary implementation without APNs
+  console.log(`Notification sent to user ${userId}: ${message}`);
+};
+
 const getHeatmapData = async (
   longitude: number,
   latitude: number,
@@ -35,4 +40,4 @@ const getHeatmapData = async (
   return heatmapData;
 };
 
-export { getStickerPublicID, getHeatmapData };
+export { getStickerPublicID, sendNotification, getHeatmapData };
