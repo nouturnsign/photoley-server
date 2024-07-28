@@ -212,32 +212,6 @@ const getFeed = async (req: Request, res: Response) => {
   }
 };
 
-const getTaggedPhotos = async (req: Request, res: Response) => {
-  const skip = parseInt(req.query.skip as string) || 0;
-  const limit = Math.min(parseInt(req.query.limit as string) || 10, 30);
-
-  try {
-    const userId = res.locals.userId;
-
-    const earliestValidDate = new Date(Date.now() - config.tagDuration);
-    const photos = await Photo.find({
-      taggedUsers: userId,
-      isTagComplete: false,
-      createdAt: { $gte: earliestValidDate },
-    })
-      .sort({ createdAt: 1 }) // Sort by createdAt in ascending order
-      .skip(skip)
-      .limit(limit)
-      .populate('pictureTaker', 'username profilePicture');
-
-    const totalPhotos = await Photo.countDocuments();
-
-    res.json({ photos: photos, total: totalPhotos, skip: skip, limit: limit });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to retrieve tagged photos' });
-  }
-};
-
 const getHeatmap = async (req: Request, res: Response) => {
   if (!req.query.latitude || !req.query.longitude) {
     return res.status(422).json({ message: 'Missing latitude or longitude' });
@@ -271,4 +245,4 @@ const getHeatmap = async (req: Request, res: Response) => {
   }
 };
 
-export { uploadPhoto, getFeed, getTaggedPhotos, getHeatmap };
+export { uploadPhoto, getFeed, getHeatmap };

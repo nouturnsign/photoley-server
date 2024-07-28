@@ -3,10 +3,10 @@ import { register, login, validateToken } from '../controllers/authController';
 import {
   getFeed,
   uploadPhoto,
-  getTaggedPhotos,
   getHeatmap,
 } from '../controllers/photoController';
 import { getProfile, updateProfile } from '../controllers/profileController';
+import { getTags } from '../controllers/tagController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware';
 
@@ -25,7 +25,7 @@ router.put(
   upload.single('profilePicture'),
   updateProfile
 );
-router.get('/tags', authenticateToken, getTaggedPhotos);
+router.get('/tags', authenticateToken, getTags);
 router.get('/heatmap', authenticateToken, getHeatmap);
 
 export default router;
