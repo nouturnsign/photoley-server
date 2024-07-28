@@ -12,8 +12,10 @@ interface IStickerPosition {
 }
 
 const uploadPhoto = async (req: Request, res: Response) => {
-  const { location, taggedUsers, stickerPositions } = req.body;
+  const { location, taggedUsers, stickerPositions, originalPhoto } = req.body;
   const pictureTaker = res.locals.userId;
+
+  const currentTimestamp = Date.now();
 
   if (!req.file) {
     return res.status(400).json({ message: 'Photo is required' });
@@ -56,6 +58,23 @@ const uploadPhoto = async (req: Request, res: Response) => {
 
   if (!parsedStickerPositions) {
     return res.status(400).json({ message: 'Invalid tagged users format' });
+  }
+
+  let taggedByPhoto;
+  try {
+    taggedByPhoto =
+      originalPhoto && originalPhoto != ''
+        ? await Photo.findById(originalPhoto)
+        : null;
+  } catch (error) {
+    return res.status(400).json({ message: 'Invalid tag photo ID' });
+  }
+
+  if (originalPhoto && !taggedByPhoto) {
+    return res.status(400).json({ message: 'Invalid tag photo ID' });
+  }
+  if (taggedByPhoto && taggedByPhoto.isTagComplete) {
+    return res.status(400).json({ message: 'Photo was already tagged' });
   }
 
   const geoLocation = {
@@ -117,20 +136,40 @@ const uploadPhoto = async (req: Request, res: Response) => {
         .end(req.file?.buffer);
     });
 
+    let isTagComplete = false;
+    if (taggedByPhoto) {
+      const timeDifference =
+        currentTimestamp - taggedByPhoto.createdAt.valueOf();
+      if (timeDifference < config.tagDuration) {
+        await User.findByIdAndUpdate(pictureTaker, {
+          $inc: { successCount: 1 },
+        });
+        await Photo.findByIdAndUpdate(originalPhoto, {
+          $set: { isTagComplete: true },
+        });
+        isTagComplete = true;
+      } else {
+        isTagComplete = false;
+      }
+    } else {
+      await Promise.all(
+        tagIds.map(async (taggedUserId) => {
+          await User.findByIdAndUpdate(taggedUserId, {
+            $inc: { taggedCount: 1 },
+          });
+        })
+      );
+      isTagComplete = false;
+    }
+
     const newPhoto = new Photo({
       url: (result as any).secure_url,
       pictureTaker: pictureTaker,
       taggedUsers: tagIds,
-      isTagComplete: false,
+      isTagComplete: isTagComplete,
       location: geoLocation,
     });
-
     await newPhoto.save();
-
-    // Update tagged count for users
-    tagIds.forEach(async (userId) => {
-      await User.findByIdAndUpdate(userId, { $inc: { taggedCount: 1 } });
-    });
 
     res.status(201).json(newPhoto);
   } catch (err) {

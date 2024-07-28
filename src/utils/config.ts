@@ -36,6 +36,7 @@ const config = {
     autoIndex: isProduction ? true : false,
   },
   port: isProduction ? process.env.PORT : 3000,
+  tagDuration: 24 * 60 * 60 * 1000, // tag duration in ms
   tls: {
     keyPath: isProduction ? '' : './localhost-key.pem',
     certPath: isProduction ? '' : './localhost.pem',
