@@ -25,6 +25,14 @@ const handleTags = async (
           await Tag.findByIdAndUpdate(existingTag._id, {
             $set: { isCompleted: true },
           });
+          const newTag = new Tag({
+            creatorId: pictureTaker,
+            taggedUserId,
+            createdAt: currentTimestamp,
+            isCompleted: true,
+            location: geoLocation,
+          });
+          await newTag.save();
           sendNotification(taggedUserId, 'Your tag has been completed!');
           return;
         }
