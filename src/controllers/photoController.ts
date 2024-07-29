@@ -80,8 +80,16 @@ const uploadPhoto = async (req: Request, res: Response) => {
 
     await handleTags(taggedUsers, pictureTaker, geoLocation, currentTimestamp);
 
+    const cloudinaryUrl = (result as any).secure_url as string;
+    const publicId = cloudinaryUrl
+      .replace(
+        `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/upload/`,
+        ''
+      )
+      .replace(/\//g, ':');
+
     const newPhoto = new Photo({
-      url: (result as any).secure_url,
+      publicId: publicId,
       pictureTaker,
       taggedUsers,
     });

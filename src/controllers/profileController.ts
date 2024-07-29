@@ -59,13 +59,18 @@ const updateProfile = async (req: Request, res: Response) => {
           )
           .end(req.file?.buffer);
       });
-      updatedFields.profilePicture = (uploadResponse as any).secure_url;
+      const cloudinaryUrl = (uploadResponse as any).secure_url as string;
+      updatedFields.profilePicture = cloudinaryUrl
+        .replace(
+          `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/upload/`,
+          ''
+        )
+        .replace(/\//g, ':');
 
       // Prepare to delete the old profile picture from Cloudinary
-      // This code was AI-generated: tbh, I don't know what an expected "public id" should look like.
       if (user.profilePicture) {
         oldProfilePicturePublicId = user.profilePicture
-          .split('/')
+          .split(':')
           .slice(-1)[0]
           .split('.')[0];
       }

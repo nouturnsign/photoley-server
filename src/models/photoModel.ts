@@ -6,7 +6,7 @@ interface IStickerPosition {
 }
 
 interface IPhoto extends Document {
-  url: string;
+  publicId: string;
   pictureTaker: Types.ObjectId;
   taggedUsers: Types.ObjectId[];
   isTagComplete: boolean;
@@ -14,7 +14,7 @@ interface IPhoto extends Document {
 }
 
 const photoSchema = new Schema<IPhoto>({
-  url: { type: String, required: true },
+  publicId: { type: String, required: true },
   pictureTaker: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -35,7 +35,7 @@ photoSchema.set('toJSON', {
     }
     return {
       id: ret._id,
-      url: ret.url,
+      publicId: ret.publicId,
       pictureTaker: ret.pictureTaker,
       taggedUsers: ret.taggedUsers,
       isTagComplete: ret.isTagComplete,

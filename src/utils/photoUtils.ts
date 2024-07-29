@@ -1,4 +1,4 @@
-import Photo, { IStickerPosition } from '../models/photoModel';
+import { IStickerPosition } from '../models/photoModel';
 import User from '../models/userModel';
 import Tag from '../models/tagModel';
 import { config } from './config';

@@ -31,7 +31,7 @@ const register = async (req: Request, res: Response) => {
     }
 
     // Upload profile picture to Cloudinary
-    let profilePictureUrl = '';
+    let profilePicturePublicId = '';
     if (req.file) {
       const uploadResponse = await new Promise((resolve, reject) => {
         cloudinary.uploader
@@ -50,7 +50,13 @@ const register = async (req: Request, res: Response) => {
           )
           .end(req.file?.buffer);
       });
-      profilePictureUrl = (uploadResponse as any).secure_url;
+      const cloudinaryUrl = (uploadResponse as any).secure_url as string;
+      profilePicturePublicId = cloudinaryUrl
+        .replace(
+          `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/upload/`,
+          ''
+        )
+        .replace(/\//g, ':');
     }
 
     // Create a new user
@@ -58,7 +64,7 @@ const register = async (req: Request, res: Response) => {
       email: email,
       password: password,
       username: username,
-      profilePicture: profilePictureUrl,
+      profilePicture: profilePicturePublicId,
       sticker: sticker,
     });
 
