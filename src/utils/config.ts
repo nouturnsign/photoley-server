@@ -28,6 +28,7 @@ let stickers: { name: string; url: string }[] = [
 
 const config = {
   cloudinary: {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     profilePictureTransformation: [
       { width: 400, height: 400, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality

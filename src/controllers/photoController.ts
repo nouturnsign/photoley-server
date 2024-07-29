@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import axios from 'axios';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/config';
@@ -8,6 +9,26 @@ import {
   validateTaggedUsers,
 } from '../utils/photoUtils';
 import { handleTags } from '../utils/tagUtils';
+
+const getImage = async (req: Request, res: Response) => {
+  const { publicId } = req.params;
+  if (!publicId) {
+    return res.status(400).json({ message: 'Missing publicId' });
+  }
+
+  const cloudinaryUrl = `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/upload/${publicId.replace(/:/g, '/')}`;
+
+  try {
+    const response = await axios.get(cloudinaryUrl, {
+      responseType: 'stream',
+    });
+
+    res.setHeader('Content-Type', response.headers['content-type']);
+    response.data.pipe(res);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch image' });
+  }
+};
 
 const uploadPhoto = async (req: Request, res: Response) => {
   const currentTimestamp = Date.now();
@@ -107,4 +128,4 @@ const getFeed = async (req: Request, res: Response) => {
   }
 };
 
-export { uploadPhoto, getFeed };
+export { getImage, uploadPhoto, getFeed };
