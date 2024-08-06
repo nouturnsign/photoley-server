@@ -1,7 +1,7 @@
 import { config } from './config';
-import Photo from '../models/photoModel';
 import Tag from '../models/tagModel';
 import { sendNotification } from './photoUtils';
+import mongoose from 'mongoose';
 
 const handleTags = async (
   taggedUsers: string[],
@@ -9,60 +9,75 @@ const handleTags = async (
   geoLocation: any,
   currentTimestamp: number
 ) => {
-  await Promise.all(
-    taggedUsers.map(async (taggedUserId: string) => {
-      let existingTag = await Tag.findOne({
+  // Start a session for atomic operations
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    for (const taggedUserId of taggedUsers) {
+      // Check for an existing tag where taggedUserId and creatorId are swapped
+      const existingTag = await Tag.findOne({
         creatorId: taggedUserId,
         taggedUserId: pictureTaker,
-        isCompleted: false,
-        location: geoLocation,
-      });
+        createdAt: { $gte: new Date(currentTimestamp - config.tagDuration) },
+      }).session(session);
 
       if (existingTag) {
-        const timeDifference =
-          currentTimestamp - existingTag.createdAt.getTime();
-        if (timeDifference < config.tagDuration) {
-          await Tag.findByIdAndUpdate(existingTag._id, {
-            $set: { isCompleted: true },
-          });
-          const newTag = new Tag({
-            creatorId: pictureTaker,
-            taggedUserId,
-            createdAt: currentTimestamp,
-            isCompleted: true,
-            location: geoLocation,
-          });
-          await newTag.save();
-          sendNotification(taggedUserId, 'Your tag has been completed!');
-          return;
+        // Update the existing tag and create a new completed tag
+        existingTag.isCompleted = true;
+        await existingTag.save();
+
+        await Tag.create(
+          [
+            {
+              creatorId: pictureTaker,
+              taggedUserId,
+              createdAt: currentTimestamp,
+              isCompleted: true,
+              location: geoLocation,
+            },
+          ],
+          { session }
+        );
+      } else {
+        // Check for an existing incomplete tag
+        const previousTag = await Tag.findOne({
+          pictureTaker,
+          taggedUserId,
+          isCompleted: false,
+        }).session(session);
+
+        if (previousTag) {
+          // Update the previous tag's createdAt
+          previousTag.createdAt = new Date(currentTimestamp);
+          await previousTag.save();
+        } else {
+          // Create a new tag
+          await Tag.create(
+            [
+              {
+                creatorId: pictureTaker,
+                taggedUserId,
+                createdAt: currentTimestamp,
+                isCompleted: false,
+                location: geoLocation,
+              },
+            ],
+            { session }
+          );
         }
       }
+    }
 
-      const previousTag = await Tag.findOne({
-        creatorId: pictureTaker,
-        taggedUserId,
-        isCompleted: false,
-      });
-
-      if (previousTag) {
-        await Tag.findByIdAndUpdate(previousTag._id, {
-          $set: { createdAt: Date.now(), location: geoLocation },
-        });
-        sendNotification(taggedUserId, 'You have been tagged in a photo!');
-        return;
-      }
-
-      const newTag = new Tag({
-        creatorId: pictureTaker,
-        taggedUserId,
-        createdAt: currentTimestamp,
-        isCompleted: false,
-        location: geoLocation,
-      });
-      await newTag.save();
-      sendNotification(taggedUserId, 'You have been tagged in a photo!');
-    })
-  );
+    // Commit the transaction
+    await session.commitTransaction();
+    session.endSession();
+  } catch (error) {
+    // Abort the transaction in case of an error
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
 
 const getHeatmapData = async (
