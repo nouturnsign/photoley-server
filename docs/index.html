@@ -167,6 +167,18 @@
       data-styled.g14[id='sc-jCbFiK'] {
         content: 'hSvuOo,';
       } /*!sc*/
+      .gskTeH {
+        height: 20px;
+        width: 20px;
+        min-width: 20px;
+        vertical-align: middle;
+        float: right;
+        transition: transform 0.2s ease-out;
+        transform: rotateZ(0);
+      } /*!sc*/
+      .gskTeH polygon {
+        fill: black;
+      } /*!sc*/
       .fqtTpb {
         height: 1.5em;
         width: 1.5em;
@@ -178,18 +190,6 @@
       } /*!sc*/
       .fqtTpb polygon {
         fill: #1d8127;
-      } /*!sc*/
-      .iMxoRf {
-        height: 20px;
-        width: 20px;
-        min-width: 20px;
-        vertical-align: middle;
-        float: right;
-        transition: transform 0.2s ease-out;
-        transform: rotateZ(0);
-      } /*!sc*/
-      .iMxoRf polygon {
-        fill: white;
       } /*!sc*/
       .dJanPw {
         height: 1.3em;
@@ -208,7 +208,7 @@
         transform: rotateZ(-90deg);
       } /*!sc*/
       data-styled.g15[id='sc-cBYhjr'] {
-        content: 'fqtTpb,iMxoRf,dJanPw,MHxpd,';
+        content: 'gskTeH,fqtTpb,dJanPw,MHxpd,';
       } /*!sc*/
       .gbdrVc {
         border-left: 1px solid #7c7cbb;
@@ -1337,32 +1337,32 @@
       data-styled.g111[id='sc-eowDPD'] {
         content: 'jcAXWA,';
       } /*!sc*/
-      .gsBSOU {
+      .jYbPfu {
         outline: 0;
         color: inherit;
         width: 100%;
         text-align: left;
         cursor: pointer;
-        padding: 10px 30px 10px 20px;
-        border-radius: 4px 4px 0 0;
-        background-color: #11171a;
+        padding: 10px 30px 10px 10px;
+        border-radius: 0;
+        background-color: transparent;
         display: flex;
         white-space: nowrap;
         align-items: center;
-        border: 1px solid transparent;
-        border-bottom: 0;
+        border: 0;
+        border-bottom: 1px solid #ccc;
         transition: border-color 0.25s ease;
       } /*!sc*/
-      .gsBSOU ..sc-eowDPD {
-        color: #ffffff;
+      .jYbPfu ..sc-eowDPD {
+        color: #333333;
       } /*!sc*/
-      .gsBSOU:focus {
+      .jYbPfu:focus {
         box-shadow:
           inset 0 2px 2px rgba(0, 0, 0, 0.45),
           0 2px 0 rgba(128, 128, 128, 0.25);
       } /*!sc*/
       data-styled.g112[id='sc-iAlELC'] {
-        content: 'gsBSOU,';
+        content: 'jYbPfu,';
       } /*!sc*/
       .kpMtuJ {
         font-size: 0.929em;
@@ -2049,6 +2049,45 @@
                   ></a
                   >Register a new user<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
+                      >post</span
+                    ><span class="sc-eowDPD jcAXWA">/register</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/register
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <h5 class="sc-dkjaqt gwrByh">
                   Request Body schema:
                   <span class="sc-dwYcXH fafqZb">multipart/form-data</span>
@@ -2245,11 +2284,11 @@
                     <button class="sc-giOWAb bEasFS" disabled="">
                       <strong class="sc-catHVh gXPvFO">409<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Conflict&lt;/p&gt;
+                        html="&lt;p&gt;Username or email already exists&lt;/p&gt;
 "
                         class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
                       >
-                        <p>Conflict</p>
+                        <p>Username or email already exists</p>
                       </div>
                     </button>
                   </div>
@@ -2268,45 +2307,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
-                      >post</span
-                    ><span class="sc-eowDPD jcAXWA">/register</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/register
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -2429,6 +2429,45 @@
                   ></a
                   >Log in an existing user<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
+                      >post</span
+                    ><span class="sc-eowDPD jcAXWA">/login</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/login
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <h5 class="sc-dkjaqt gwrByh">
                   Request Body schema:
                   <span class="sc-dwYcXH fafqZb">application/json</span>
@@ -2562,45 +2601,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
-                      >post</span
-                    ><span class="sc-eowDPD jcAXWA">/login</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/login
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Request samples<!-- -->
@@ -2803,6 +2803,45 @@
                   ></a
                   >Validate the access token<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
+                      >get</span
+                    ><span class="sc-eowDPD jcAXWA">/validate</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/validate
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -2826,6 +2865,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -2870,14 +2913,31 @@
                   </div>
                 </div>
               </div>
-              <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
+              <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX"></div>
+            </div>
+          </div>
+          <div
+            id="/paths/~1image~1{publicId}/get"
+            data-section-id="/paths/~1image~1{publicId}/get"
+            class="sc-dsLQwm kcRA-dj"
+          >
+            <div class="sc-la-DxNn dSIRVR">
+              <div class="sc-fQpRED htdgPt">
+                <h2 class="sc-knesRu cbpGTP">
+                  <a
+                    class="sc-jCbFiK hSvuOo"
+                    href="#/paths/~1image~1{publicId}/get"
+                    aria-label="/paths/~1image~1{publicId}/get"
+                  ></a
+                  >Get an image by its publicId<!-- -->
+                </h2>
                 <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
+                  <button class="sc-iAlELC jYbPfu">
                     <span type="get" class="sc-oeqTF ffmPnn http-verb get"
                       >get</span
-                    ><span class="sc-eowDPD jcAXWA">/validate</span
+                    ><span class="sc-eowDPD jcAXWA">/image/{publicId}</span
                     ><svg
-                      class="sc-cBYhjr iMxoRf"
+                      class="sc-cBYhjr gskTeH"
                       style="margin-right: -25px"
                       version="1.1"
                       viewBox="0 0 24 24"
@@ -2904,30 +2964,12 @@
                         <div class="sc-hDcvty jpmGrk">
                           <span
                             >https://photoley-server.onrender.com/api/v1</span
-                          >/validate
+                          >/image/{publicId}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="/paths/~1image~1{publicId}/get"
-            data-section-id="/paths/~1image~1{publicId}/get"
-            class="sc-dsLQwm kcRA-dj"
-          >
-            <div class="sc-la-DxNn dSIRVR">
-              <div class="sc-fQpRED htdgPt">
-                <h2 class="sc-knesRu cbpGTP">
-                  <a
-                    class="sc-jCbFiK hSvuOo"
-                    href="#/paths/~1image~1{publicId}/get"
-                    aria-label="/paths/~1image~1{publicId}/get"
-                  ></a
-                  >Get an image by its publicId<!-- -->
-                </h2>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -2951,6 +2993,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -3024,13 +3070,13 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
-                      <strong class="sc-catHVh gXPvFO">400<!-- --> </strong>
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Bad request&lt;/p&gt;
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
 "
                         class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
                       >
-                        <p>Bad request</p>
+                        <p>Unauthorized</p>
                       </div>
                     </button>
                   </div>
@@ -3060,14 +3106,31 @@
                   </div>
                 </div>
               </div>
-              <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
+              <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX"></div>
+            </div>
+          </div>
+          <div
+            id="/paths/~1feed/get"
+            data-section-id="/paths/~1feed/get"
+            class="sc-dsLQwm kcRA-dj"
+          >
+            <div class="sc-la-DxNn dSIRVR">
+              <div class="sc-fQpRED htdgPt">
+                <h2 class="sc-knesRu cbpGTP">
+                  <a
+                    class="sc-jCbFiK hSvuOo"
+                    href="#/paths/~1feed/get"
+                    aria-label="/paths/~1feed/get"
+                  ></a
+                  >Get a feed of photos<!-- -->
+                </h2>
                 <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
+                  <button class="sc-iAlELC jYbPfu">
                     <span type="get" class="sc-oeqTF ffmPnn http-verb get"
                       >get</span
-                    ><span class="sc-eowDPD jcAXWA">/image/{publicId}</span
+                    ><span class="sc-eowDPD jcAXWA">/feed</span
                     ><svg
-                      class="sc-cBYhjr iMxoRf"
+                      class="sc-cBYhjr gskTeH"
                       style="margin-right: -25px"
                       version="1.1"
                       viewBox="0 0 24 24"
@@ -3094,30 +3157,12 @@
                         <div class="sc-hDcvty jpmGrk">
                           <span
                             >https://photoley-server.onrender.com/api/v1</span
-                          >/image/{publicId}
+                          >/feed
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="/paths/~1feed/get"
-            data-section-id="/paths/~1feed/get"
-            class="sc-dsLQwm kcRA-dj"
-          >
-            <div class="sc-la-DxNn dSIRVR">
-              <div class="sc-fQpRED htdgPt">
-                <h2 class="sc-knesRu cbpGTP">
-                  <a
-                    class="sc-jCbFiK hSvuOo"
-                    href="#/paths/~1feed/get"
-                    aria-label="/paths/~1feed/get"
-                  ></a
-                  >Get a feed of photos<!-- -->
-                </h2>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -3141,6 +3186,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -3239,6 +3288,30 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">400<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Bad request&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Bad request</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Unauthorized</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
                       <strong class="sc-catHVh gXPvFO">500<!-- --> </strong>
                       <div
                         html="&lt;p&gt;Internal server error&lt;/p&gt;
@@ -3252,45 +3325,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
-                      >get</span
-                    ><span class="sc-eowDPD jcAXWA">/feed</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/feed
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -3589,6 +3623,45 @@
                   ></a
                   >Upload a new photo<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
+                      >post</span
+                    ><span class="sc-eowDPD jcAXWA">/photo</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/photo
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -3612,6 +3685,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -3768,6 +3845,18 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Unauthorized</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
                       <strong class="sc-catHVh gXPvFO">500<!-- --> </strong>
                       <div
                         html="&lt;p&gt;Internal server error&lt;/p&gt;
@@ -3781,45 +3870,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="post" class="sc-oeqTF kpMtuJ http-verb post"
-                      >post</span
-                    ><span class="sc-eowDPD jcAXWA">/photo</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/photo
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -3944,6 +3994,45 @@
                   ></a
                   >Get the user&#x27;s profile<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
+                      >get</span
+                    ><span class="sc-eowDPD jcAXWA">/profile</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/profile
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -3967,6 +4056,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -4024,45 +4117,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
-                      >get</span
-                    ><span class="sc-eowDPD jcAXWA">/profile</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/profile
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -4185,6 +4239,45 @@
                   ></a
                   >Update the user&#x27;s profile<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="put" class="sc-oeqTF ildnnS http-verb put"
+                      >put</span
+                    ><span class="sc-eowDPD jcAXWA">/profile</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/profile
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -4208,6 +4301,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -4350,6 +4447,18 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Unauthorized</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
                       <strong class="sc-catHVh gXPvFO">404<!-- --> </strong>
                       <div
                         html="&lt;p&gt;User not found&lt;/p&gt;
@@ -4357,6 +4466,18 @@
                         class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
                       >
                         <p>User not found</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">409<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Username already exists&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Username already exists</p>
                       </div>
                     </button>
                   </div>
@@ -4375,45 +4496,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="put" class="sc-oeqTF ildnnS http-verb put"
-                      >put</span
-                    ><span class="sc-eowDPD jcAXWA">/profile</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/profile
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -4536,6 +4618,45 @@
                   ></a
                   >Get tags for the authenticated user<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
+                      >get</span
+                    ><span class="sc-eowDPD jcAXWA">/tags</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/tags
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -4559,6 +4680,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -4657,6 +4782,30 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">400<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Bad request&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Bad request</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
+                      >
+                        <p>Unauthorized</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-giOWAb bEasFS" disabled="">
                       <strong class="sc-catHVh gXPvFO">500<!-- --> </strong>
                       <div
                         html="&lt;p&gt;Internal server error&lt;/p&gt;
@@ -4670,45 +4819,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
-                      >get</span
-                    ><span class="sc-eowDPD jcAXWA">/tags</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/tags
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -4921,6 +5031,45 @@
                   ></a
                   >Get heatmap data based on location<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
+                      >get</span
+                    ><span class="sc-eowDPD jcAXWA">/heatmap</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/heatmap
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="sc-hWiVxH cCfxdS">
                   <div class="sc-jHofgq febKCY">
                     <h5 class="sc-dkjaqt sc-jRHPII gwrByh eGMvsx">
@@ -4944,6 +5093,10 @@
                     <span class="sc-iHlJgr lkBZak"
                       ><span class="sc-blcnQh fyveIh"
                         ><i>bearerAuth</i></span
+                      ></span
+                    ><span class="sc-iHlJgr lkBZak"
+                      ><span class="sc-blcnQh fyveIh"
+                        ><i>cookieAuth</i></span
                       ></span
                     >
                   </div>
@@ -5124,13 +5277,13 @@
                   </div>
                   <div>
                     <button class="sc-giOWAb bEasFS" disabled="">
-                      <strong class="sc-catHVh gXPvFO">409<!-- --> </strong>
+                      <strong class="sc-catHVh gXPvFO">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Conflict&lt;/p&gt;
+                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
 "
                         class="sc-euGpHm sc-exayXG fwfkcU kqJXdD sc-dHrNzZ dRdjww"
                       >
-                        <p>Conflict</p>
+                        <p>Unauthorized</p>
                       </div>
                     </button>
                   </div>
@@ -5149,45 +5302,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
-                      >get</span
-                    ><span class="sc-eowDPD jcAXWA">/heatmap</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/heatmap
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -5275,6 +5389,45 @@
                   ></a
                   >Get available stickers<!-- -->
                 </h2>
+                <div class="sc-dKsqdn dCbPd">
+                  <button class="sc-iAlELC jYbPfu">
+                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
+                      >get</span
+                    ><span class="sc-eowDPD jcAXWA">/stickers</span
+                    ><svg
+                      class="sc-cBYhjr gskTeH"
+                      style="margin-right: -25px"
+                      version="1.1"
+                      viewBox="0 0 24 24"
+                      x="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      y="0"
+                      aria-hidden="true"
+                    >
+                      <polygon
+                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                      ></polygon>
+                    </svg>
+                  </button>
+                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
+                    <div class="sc-drnuxz hdRKqQ">
+                      <div
+                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
+"
+                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
+                      >
+                        <p>Render deployment of server</p>
+                      </div>
+                      <div tabindex="0" role="button">
+                        <div class="sc-hDcvty jpmGrk">
+                          <span
+                            >https://photoley-server.onrender.com/api/v1</span
+                          >/stickers
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <h3 class="sc-eiLgtK dbBFCU">Responses</h3>
                   <div>
@@ -5316,45 +5469,6 @@
                 </div>
               </div>
               <div class="sc-iKTcqh sc-gnpbhQ fTxZsC drGLlX">
-                <div class="sc-dKsqdn dCbPd">
-                  <button class="sc-iAlELC gsBSOU">
-                    <span type="get" class="sc-oeqTF ffmPnn http-verb get"
-                      >get</span
-                    ><span class="sc-eowDPD jcAXWA">/stickers</span
-                    ><svg
-                      class="sc-cBYhjr iMxoRf"
-                      style="margin-right: -25px"
-                      version="1.1"
-                      viewBox="0 0 24 24"
-                      x="0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      y="0"
-                      aria-hidden="true"
-                    >
-                      <polygon
-                        points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
-                      ></polygon>
-                    </svg>
-                  </button>
-                  <div aria-hidden="true" class="sc-ezTrPE bFiOkX">
-                    <div class="sc-drnuxz hdRKqQ">
-                      <div
-                        html="&lt;p&gt;Render deployment of server&lt;/p&gt;
-"
-                        class="sc-euGpHm sc-exayXG fwfkcU jYGAQp"
-                      >
-                        <p>Render deployment of server</p>
-                      </div>
-                      <div tabindex="0" role="button">
-                        <div class="sc-hDcvty jpmGrk">
-                          <span
-                            >https://photoley-server.onrender.com/api/v1</span
-                          >/stickers
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <h3 class="sc-kkmypM jKNCPF">
                     <!-- -->Response samples<!-- -->
@@ -5513,19 +5627,13 @@
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              email: { type: 'string' },
-                              username: { type: 'string' },
-                              profilePicture: { type: 'string' },
-                              sticker: { type: 'string' },
-                            },
+                            $ref: '#/components/schemas/UserProfileResponse',
                           },
                         },
                       },
                     },
                     400: { description: 'Bad request' },
-                    409: { description: 'Conflict' },
+                    409: { description: 'Username or email already exists' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5559,13 +5667,7 @@
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              email: { type: 'string' },
-                              username: { type: 'string' },
-                              profilePicture: { type: 'string' },
-                              sticker: { type: 'string' },
-                            },
+                            $ref: '#/components/schemas/UserProfileResponse',
                           },
                         },
                       },
@@ -5579,7 +5681,7 @@
               '/validate': {
                 get: {
                   summary: 'Validate the access token',
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: { description: 'Token is valid' },
                     401: { description: 'Unauthorized' },
@@ -5598,7 +5700,7 @@
                       schema: { type: 'string' },
                     },
                   ],
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'Image retrieved successfully',
@@ -5606,9 +5708,13 @@
                         'image/jpeg': {
                           schema: { type: 'string', format: 'binary' },
                         },
+                        'image/png': {
+                          schema: { type: 'string', format: 'binary' },
+                        },
+                        'image/svg': { schema: { type: 'string' } },
                       },
                     },
-                    400: { description: 'Bad request' },
+                    401: { description: 'Unauthorized' },
                     404: { description: 'Image not found' },
                     500: { description: 'Internal server error' },
                   },
@@ -5621,49 +5727,18 @@
                     { name: 'skip', in: 'query', schema: { type: 'integer' } },
                     { name: 'limit', in: 'query', schema: { type: 'integer' } },
                   ],
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'Photos retrieved successfully',
                       content: {
                         'application/json': {
-                          schema: {
-                            type: 'object',
-                            properties: {
-                              photos: {
-                                type: 'array',
-                                items: {
-                                  type: 'object',
-                                  properties: {
-                                    publicId: { type: 'string' },
-                                    pictureTaker: {
-                                      type: 'object',
-                                      properties: {
-                                        username: { type: 'string' },
-                                        profilePicture: { type: 'string' },
-                                      },
-                                    },
-                                    taggedUsers: {
-                                      type: 'array',
-                                      items: {
-                                        type: 'object',
-                                        properties: {
-                                          username: { type: 'string' },
-                                          profilePicture: { type: 'string' },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                              total: { type: 'integer' },
-                              skip: { type: 'integer' },
-                              limit: { type: 'integer' },
-                            },
-                          },
+                          schema: { $ref: '#/components/schemas/FeedResponse' },
                         },
                       },
                     },
+                    400: { description: 'Bad request' },
+                    401: { description: 'Unauthorized' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5695,27 +5770,20 @@
                     },
                     required: true,
                   },
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     201: {
                       description: 'Photo uploaded successfully',
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              publicId: { type: 'string' },
-                              pictureTaker: { type: 'string' },
-                              taggedUsers: {
-                                type: 'array',
-                                items: { type: 'string' },
-                              },
-                            },
+                            $ref: '#/components/schemas/PhotoUploadResponse',
                           },
                         },
                       },
                     },
                     400: { description: 'Bad request' },
+                    401: { description: 'Unauthorized' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5723,20 +5791,14 @@
               '/profile': {
                 get: {
                   summary: "Get the user's profile",
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'User profile retrieved successfully',
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              email: { type: 'string' },
-                              username: { type: 'string' },
-                              profilePicture: { type: 'string' },
-                              sticker: { type: 'string' },
-                            },
+                            $ref: '#/components/schemas/UserProfileResponse',
                           },
                         },
                       },
@@ -5765,26 +5827,22 @@
                     },
                     required: true,
                   },
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'Profile updated successfully',
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              email: { type: 'string' },
-                              username: { type: 'string' },
-                              profilePicture: { type: 'string' },
-                              sticker: { type: 'string' },
-                            },
+                            $ref: '#/components/schemas/UserProfileResponse',
                           },
                         },
                       },
                     },
                     400: { description: 'Bad request' },
+                    401: { description: 'Unauthorized' },
                     404: { description: 'User not found' },
+                    409: { description: 'Username already exists' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5796,39 +5854,18 @@
                     { name: 'skip', in: 'query', schema: { type: 'integer' } },
                     { name: 'limit', in: 'query', schema: { type: 'integer' } },
                   ],
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'Tags retrieved successfully',
                       content: {
                         'application/json': {
-                          schema: {
-                            type: 'object',
-                            properties: {
-                              tags: {
-                                type: 'array',
-                                items: {
-                                  type: 'object',
-                                  properties: {
-                                    tagId: { type: 'string' },
-                                    creator: {
-                                      type: 'object',
-                                      properties: {
-                                        username: { type: 'string' },
-                                        profilePicture: { type: 'string' },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                              total: { type: 'integer' },
-                              skip: { type: 'integer' },
-                              limit: { type: 'integer' },
-                            },
-                          },
+                          schema: { $ref: '#/components/schemas/TagsResponse' },
                         },
                       },
                     },
+                    400: { description: 'Bad request' },
+                    401: { description: 'Unauthorized' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5860,21 +5897,20 @@
                       schema: { type: 'number', format: 'float' },
                     },
                   ],
-                  security: [{ bearerAuth: [] }],
+                  security: [{ bearerAuth: [] }, { cookieAuth: [] }],
                   responses: {
                     200: {
                       description: 'Heatmap data retrieved successfully',
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: { heatmapData: { type: 'object' } },
+                            $ref: '#/components/schemas/HeatmapResponse',
                           },
                         },
                       },
                     },
                     400: { description: 'Bad request' },
-                    409: { description: 'Conflict' },
+                    401: { description: 'Unauthorized' },
                     500: { description: 'Internal server error' },
                   },
                 },
@@ -5888,16 +5924,7 @@
                       content: {
                         'application/json': {
                           schema: {
-                            type: 'object',
-                            properties: {
-                              stickers: {
-                                type: 'array',
-                                items: {
-                                  type: 'object',
-                                  properties: { publicId: { type: 'string' } },
-                                },
-                              },
-                            },
+                            $ref: '#/components/schemas/StickersResponse',
                           },
                         },
                       },
@@ -5913,6 +5940,100 @@
                   type: 'http',
                   scheme: 'bearer',
                   bearerFormat: 'JWT',
+                },
+                cookieAuth: {
+                  type: 'apiKey',
+                  in: 'cookie',
+                  name: 'refreshToken',
+                },
+              },
+              schemas: {
+                UserPublicProfile: {
+                  type: 'object',
+                  properties: {
+                    username: { type: 'string' },
+                    profilePicture: { type: 'string' },
+                  },
+                  required: ['username', 'profilePicture'],
+                },
+                UserProfileResponse: {
+                  type: 'object',
+                  properties: {
+                    email: { type: 'string' },
+                    username: { type: 'string' },
+                    profilePicture: { type: 'string' },
+                    sticker: { type: 'string' },
+                  },
+                },
+                FeedResponse: {
+                  type: 'object',
+                  properties: {
+                    photos: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          publicId: { type: 'string' },
+                          pictureTaker: {
+                            $ref: '#/components/schemas/UserPublicProfile',
+                          },
+                          taggedUsers: {
+                            type: 'array',
+                            items: {
+                              $ref: '#/components/schemas/UserPublicProfile',
+                            },
+                          },
+                        },
+                      },
+                    },
+                    total: { type: 'integer' },
+                    skip: { type: 'integer' },
+                    limit: { type: 'integer' },
+                  },
+                },
+                PhotoUploadResponse: {
+                  type: 'object',
+                  properties: {
+                    publicId: { type: 'string' },
+                    pictureTaker: { type: 'string' },
+                    taggedUsers: { type: 'array', items: { type: 'string' } },
+                  },
+                },
+                TagsResponse: {
+                  type: 'object',
+                  properties: {
+                    tags: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          tagId: { type: 'string' },
+                          creator: {
+                            $ref: '#/components/schemas/UserPublicProfile',
+                          },
+                        },
+                      },
+                    },
+                    total: { type: 'integer' },
+                    skip: { type: 'integer' },
+                    limit: { type: 'integer' },
+                  },
+                },
+                HeatmapResponse: {
+                  type: 'object',
+                  properties: { heatmapData: { type: 'object' } },
+                },
+                StickersResponse: {
+                  type: 'object',
+                  properties: {
+                    stickers: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: { publicId: { type: 'string' } },
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -6024,7 +6145,7 @@
             pipeline: [],
           },
         },
-        options: {},
+        options: { pathInMiddlePanel: true },
       };
 
       var container = document.getElementById('redoc');
