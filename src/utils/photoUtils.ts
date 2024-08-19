@@ -1,5 +1,5 @@
 const sendNotification = async (userId: string, message: string) => {
-  // temporary implementation without APNs
+  // TODO: use APNs (maybe node-apn)
   console.log(`Notification sent to user ${userId}: ${message}`);
 };
 

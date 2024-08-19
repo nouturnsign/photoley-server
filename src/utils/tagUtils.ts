@@ -44,7 +44,7 @@ const handleTags = async (
           taggedUserId,
           'One of your tags has been completed!'
         ).then((result) => {
-          // TODO
+          // TODO: log on result (failure is acceptable)
         });
       } else {
         // Check for an existing incomplete tag
@@ -75,7 +75,7 @@ const handleTags = async (
         }
         sendNotification(taggedUserId, 'You have been tagged in a photo!').then(
           (result) => {
-            // TODO
+            // TODO: log on result (failure is acceptable)
           }
         );
       }
