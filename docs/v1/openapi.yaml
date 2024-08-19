@@ -430,6 +430,6 @@ components:
       scheme: bearer
       bearerFormat: JWT
     cookieAuth:
-      type: http
-      scheme: cookie
-      description: The `refreshToken` cookie must be passed for authentication.
+      type: apiKey
+      in: cookie
+      name: refreshToken
