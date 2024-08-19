@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { config } from '../utils/config';
 import Tag from '../models/tagModel';
 import { getHeatmapData } from '../utils/tagUtils';
+import Sticker from '../models/stickerModel';
 
 const getTags = async (req: Request, res: Response) => {
   const skip = parseInt(req.query.skip as string) || 0;
@@ -66,11 +67,23 @@ const getHeatmap = async (req: Request, res: Response) => {
 };
 
 const getStickers = async (req: Request, res: Response) => {
-  const stickers = {
-    stickers: config.cloudinary.stickers,
-    updatedAt: config.deployedAt,
-  };
-  res.json(stickers);
+  try {
+    const stickers = await Sticker.find({}, 'publicId').lean();
+
+    const response = {
+      stickers,
+    };
+    res.json(response);
+  } catch (err) {
+    if (err instanceof Error) {
+      res
+        .status(500)
+        .json({ message: 'Failed to fetch stickers', error: err.message });
+    } else {
+      console.error('Unknown error:', err);
+      res.status(500).json({ message: 'An unknown error occurred' });
+    }
+  }
 };
 
 export { getTags, getHeatmap, getStickers };
