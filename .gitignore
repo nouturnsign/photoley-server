@@ -1,6 +1,7 @@
 # Project-specific
 dist/
 *.pem
+redoc-static.html
 
 # Dependency directories
 node_modules/

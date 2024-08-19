@@ -2,6 +2,10 @@
 
 Server for Photoley app.
 
+## Documentation
+
+See [`docs/index.html`](docs/index.html).
+
 ## Deployment
 
 Currently using Render.
@@ -14,15 +18,12 @@ Hosted at https://photoley-server.onrender.com
 
 To install, first make sure the following are installed:
 
-- [git](https://git-scm.com/)
 - [nvm](https://github.com/nvm-sh/nvm)
 - [npm](https://www.npmjs.com/)
 
 Then, to clone the project and install its dependencies,
 
 ```sh
-git clone https://github.com/nouturnsign/photoley-server.git
-cd photoley-server
 nvm use
 npm install
 ```
@@ -33,6 +34,26 @@ npm install
 
 ```sh
 npm run dev
+```
+
+### Building Documentation
+
+To lint documentation,
+
+```sh
+npx @redocly/cli lint private@v1
+```
+
+To build documentation,
+
+```sh
+npx @redocly/cli build-docs private@v1
+```
+
+For convenience, the following script is provided to both lint and build docs.
+
+```sh
+npm run build-docs
 ```
 
 ### Collaboration

@@ -1,0 +1,5 @@
+apis:
+  private@v1:
+    root: ./docs/v1/openapi.yaml
+rules:
+  operation-4xx-response: off
