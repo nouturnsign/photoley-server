@@ -3,3 +3,6 @@ apis:
     root: ./docs/v1/openapi.yaml
 rules:
   operation-4xx-response: off
+theme:
+  openapi:
+    pathInMiddlePanel: true
