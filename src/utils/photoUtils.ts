@@ -1,12 +1,3 @@
-import { IStickerPosition } from '../models/photoModel';
-import User from '../models/userModel';
-import Tag from '../models/tagModel';
-import { config } from './config';
-
-const getStickerPublicID = (name: string) => {
-  return 'stickers:' + name;
-};
-
 const sendNotification = async (userId: string, message: string) => {
   // temporary implementation without APNs
   console.log(`Notification sent to user ${userId}: ${message}`);
@@ -34,4 +25,4 @@ const parsePhotoRequestBody = (body: any) => {
   }
 };
 
-export { getStickerPublicID, sendNotification, parsePhotoRequestBody };
+export { sendNotification, parsePhotoRequestBody };
