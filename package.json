@@ -4,7 +4,7 @@
   "description": "Picley server (MVP)",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production ts-node src/server.ts",
+    "start": "node dist/server.js",
     "build": "tsc",
     "dev": "NODE_ENV=development ts-node-dev src/server.ts",
     "prestart": "npm run build",
