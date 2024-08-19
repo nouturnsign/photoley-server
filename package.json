@@ -1,6 +1,6 @@
 {
   "name": "photoley-server",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Photoley server (MVP)",
   "main": "src/server.ts",
   "scripts": {
