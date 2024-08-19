@@ -1,8 +1,8 @@
 {
   "name": "photoley-server",
   "version": "1.0.0-alpha.1",
-  "description": "Picley server (MVP)",
-  "main": "index.js",
+  "description": "Photoley server (MVP)",
+  "main": "src/server.ts",
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
