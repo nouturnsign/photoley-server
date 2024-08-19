@@ -15,12 +15,12 @@ const config = {
   cloudinary: {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     profilePictureTransformation: [
-      { width: 400, height: 400, crop: 'fill' }, // Standardize dimensions
+      { width: 800, height: 800, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
     photoTransformation: [
-      { width: 900, height: 1200, crop: 'fill' }, // Standardize dimensions
+      { width: 1600, height: 2400, crop: 'fill' }, // Standardize dimensions
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
