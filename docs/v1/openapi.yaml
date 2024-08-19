@@ -38,7 +38,7 @@ paths:
         400:
           description: Bad request
         409:
-          description: Conflict
+          description: Username or email already exists
         500:
           description: Internal server error
 
@@ -69,6 +69,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserProfileResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
         500:
@@ -144,6 +146,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FeedResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
         500:
@@ -185,6 +189,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PhotoUploadResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
         500:
@@ -234,6 +240,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserProfileResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
         404:
@@ -265,6 +273,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TagsResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
         500:
@@ -306,10 +316,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HeatmapResponse'
+        400:
+          description: Bad request
         401:
           description: Unauthorized
-        409:
-          description: Conflict
         500:
           description: Internal server error
 
