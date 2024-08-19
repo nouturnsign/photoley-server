@@ -33,7 +33,7 @@ const updateProfile = async (req: Request, res: Response) => {
     if (username && username !== user.username) {
       const existingUsername = await User.findOne({ username });
       if (existingUsername) {
-        return res.status(400).json({ message: 'Username already exists' });
+        return res.status(409).json({ message: 'Username already exists' });
       }
     }
 
