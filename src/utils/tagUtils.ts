@@ -15,17 +15,18 @@ const handleTags = async (
 
   try {
     for (const taggedUserId of taggedUsers) {
-      // Check for an existing tag where taggedUserId and creatorId are swapped
+      // Check for an existing incomplete tag where taggedUserId and creatorId are swapped
       const existingTag = await Tag.findOne({
         creatorId: taggedUserId,
         taggedUserId: pictureTaker,
         createdAt: { $gte: new Date(currentTimestamp - config.tagDuration) },
+        isCompleted: false,
       }).session(session);
 
       if (existingTag) {
         // Update the existing tag and create a new completed tag
         existingTag.isCompleted = true;
-        await existingTag.save();
+        await existingTag.save({ session });
 
         await Tag.create(
           [
@@ -56,7 +57,7 @@ const handleTags = async (
         if (previousTag) {
           // Update the previous tag's createdAt
           previousTag.createdAt = new Date(currentTimestamp);
-          await previousTag.save();
+          await previousTag.save({ session });
         } else {
           // Create a new tag
           await Tag.create(
