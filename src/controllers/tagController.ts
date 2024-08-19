@@ -44,7 +44,7 @@ const getHeatmap = async (req: Request, res: Response) => {
 
   if (minDistance >= maxDistance) {
     return res
-      .status(409)
+      .status(400)
       .json({ message: 'Minimum distance should not exceed maximum distance' });
   }
 
