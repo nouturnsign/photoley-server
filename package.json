@@ -1,5 +1,5 @@
 {
-  "name": "picley-mvp-server",
+  "name": "photoley-server",
   "version": "1.0.0",
   "description": "Picley server (MVP)",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nouturnsign/picley-mvp-server.git"
+    "url": "git+https://github.com/nouturnsign/photoley-server.git"
   },
   "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/nouturnsign/picley-mvp-server/issues"
+    "url": "https://github.com/nouturnsign/photoley-server/issues"
   },
-  "homepage": "https://github.com/nouturnsign/picley-mvp-server#readme",
+  "homepage": "https://github.com/nouturnsign/photoley-server#readme",
   "dependencies": {
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
