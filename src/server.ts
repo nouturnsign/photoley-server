@@ -15,8 +15,10 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Apply routes
 app.use('/api/v1', v1Router);
+app.get('/', (req, res) => {
+  res.status(301).redirect('/api/v1/health');
+});
 
 if (isProduction) {
   // Using Render for hosting (automatically HTTPS)

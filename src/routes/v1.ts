@@ -5,10 +5,11 @@ import { getProfile, updateProfile } from '../controllers/profileController';
 import { getHeatmap, getStickers, getTags } from '../controllers/tagController';
 import { authenticateToken } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware';
+import { basicHealthCheck } from '../controllers/healthController';
 
 const router = Router();
 
-// Public routes
+router.get('/health', basicHealthCheck);
 router.post('/register', upload.single('profilePicture'), register);
 router.post('/login', login);
 router.get('/validate', authenticateToken, validateToken);

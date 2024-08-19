@@ -12,6 +12,8 @@ Currently using Render.
 
 Hosted at https://photoley-server.onrender.com
 
+Visiting the base URL gives a basic health check.
+
 ## Local Development
 
 ### Installation
