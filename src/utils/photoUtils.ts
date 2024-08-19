@@ -7,7 +7,7 @@ const getStickerPublicID = (name: string) => {
   return 'stickers:' + name;
 };
 
-const sendNotification = (userId: string, message: string) => {
+const sendNotification = async (userId: string, message: string) => {
   // temporary implementation without APNs
   console.log(`Notification sent to user ${userId}: ${message}`);
 };

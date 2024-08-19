@@ -39,7 +39,12 @@ const handleTags = async (
           ],
           { session }
         );
-        sendNotification(taggedUserId, 'One of your tags has been completed!');
+        sendNotification(
+          taggedUserId,
+          'One of your tags has been completed!'
+        ).then((result) => {
+          // TODO
+        });
       } else {
         // Check for an existing incomplete tag
         const previousTag = await Tag.findOne({
@@ -67,7 +72,11 @@ const handleTags = async (
             { session }
           );
         }
-        sendNotification(taggedUserId, 'You have been tagged in a photo!');
+        sendNotification(taggedUserId, 'You have been tagged in a photo!').then(
+          (result) => {
+            // TODO
+          }
+        );
       }
     }
 
