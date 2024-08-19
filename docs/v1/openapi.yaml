@@ -44,11 +44,11 @@ paths:
                     type: string
                   sticker:
                     type: string
-        "400":
+        400:
           description: Bad request
-        "409":
+        409:
           description: Conflict
-        "500":
+        500:
           description: Internal server error
 
   /login:
@@ -66,7 +66,7 @@ paths:
                   type: string
         required: true
       responses:
-        "200":
+        200:
           description: User logged in successfully
           headers:
             Authorization:
@@ -87,11 +87,11 @@ paths:
                     type: string
                   sticker:
                     type: string
-        "400":
+        400:
           description: Bad request
-        "401":
+        401:
           description: Unauthorized
-        "500":
+        500:
           description: Internal server error
 
   /validate:
@@ -99,12 +99,13 @@ paths:
       summary: Validate the access token
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Token is valid
-        "401":
+        401:
           description: Unauthorized
-        "500":
+        500:
           description: Internal server error
 
   /image/{publicId}:
@@ -118,19 +119,21 @@ paths:
             type: string
       security:
         - bearerAuth: []
+        - cookieAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Image retrieved successfully
           content:
             image/jpeg:
               schema:
                 type: string
                 format: binary
-        "400":
+        400:
           description: Bad request
-        "404":
+        404:
           description: Image not found
-        "500":
+        500:
           description: Internal server error
 
   /feed:
@@ -147,8 +150,9 @@ paths:
             type: integer
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Photos retrieved successfully
           content:
             application/json:
@@ -184,7 +188,7 @@ paths:
                     type: integer
                   limit:
                     type: integer
-        "500":
+        500:
           description: Internal server error
 
   /photo:
@@ -215,6 +219,7 @@ paths:
         required: true
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
         "201":
           description: Photo uploaded successfully
@@ -231,9 +236,9 @@ paths:
                     type: array
                     items:
                       type: string
-        "400":
+        400:
           description: Bad request
-        "500":
+        500:
           description: Internal server error
 
   /profile:
@@ -241,8 +246,9 @@ paths:
       summary: Get the user's profile
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: User profile retrieved successfully
           content:
             application/json:
@@ -257,9 +263,9 @@ paths:
                     type: string
                   sticker:
                     type: string
-        "401":
+        401:
           description: Unauthorized
-        "500":
+        500:
           description: Internal server error
 
     put:
@@ -280,8 +286,9 @@ paths:
         required: true
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Profile updated successfully
           content:
             application/json:
@@ -296,11 +303,11 @@ paths:
                     type: string
                   sticker:
                     type: string
-        "400":
+        400:
           description: Bad request
-        "404":
+        404:
           description: User not found
-        "500":
+        500:
           description: Internal server error
 
   /tags:
@@ -317,8 +324,9 @@ paths:
             type: integer
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Tags retrieved successfully
           content:
             application/json:
@@ -345,7 +353,7 @@ paths:
                     type: integer
                   limit:
                     type: integer
-        "500":
+        500:
           description: Internal server error
 
   /heatmap:
@@ -376,8 +384,9 @@ paths:
             format: float
       security:
         - bearerAuth: []
+        - cookieAuth: []
       responses:
-        "200":
+        200:
           description: Heatmap data retrieved successfully
           content:
             application/json:
@@ -386,18 +395,18 @@ paths:
                 properties:
                   heatmapData:
                     type: object
-        "400":
+        400:
           description: Bad request
-        "409":
+        409:
           description: Conflict
-        "500":
+        500:
           description: Internal server error
 
   /stickers:
     get:
       summary: Get available stickers
       responses:
-        "200":
+        200:
           description: Stickers retrieved successfully
           content:
             application/json:
@@ -411,7 +420,7 @@ paths:
                       properties:
                         publicId:
                           type: string
-        "500":
+        500:
           description: Internal server error
 
 components:
@@ -420,3 +429,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    cookieAuth:
+      type: http
+      scheme: cookie
+      description: The `refreshToken` cookie must be passed for authentication.
