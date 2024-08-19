@@ -3,11 +3,7 @@ import axios from 'axios';
 import Photo from '../models/photoModel';
 import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../utils/config';
-import {
-  buildStickerTransformations,
-  parseRequestBody,
-  validateTaggedUsers,
-} from '../utils/photoUtils';
+import { parsePhotoRequestBody } from '../utils/photoUtils';
 import { handleTags } from '../utils/tagUtils';
 
 const getImage = async (req: Request, res: Response) => {
@@ -37,26 +33,12 @@ const uploadPhoto = async (req: Request, res: Response) => {
     throw new Error('Photo is required');
   }
 
-  const { location, taggedUsers, stickerPositions } = parseRequestBody(
-    req.body
-  );
+  const { location, taggedUsers } = parsePhotoRequestBody(req.body);
   const pictureTaker = res.locals.userId;
   const geoLocation = {
     type: 'Point',
     coordinates: [location.lon, location.lat],
   };
-
-  const userStickers = await validateTaggedUsers(taggedUsers, stickerPositions);
-  const stickerTransformations = buildStickerTransformations(
-    userStickers,
-    stickerPositions
-  );
-
-  const transformations = ([] as any[]).concat(
-    config.cloudinary.photoPreTransformation,
-    stickerTransformations,
-    config.cloudinary.photoPostTransformation
-  );
 
   try {
     const result = await new Promise((resolve, reject) => {
@@ -64,7 +46,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
         .upload_stream(
           {
             folder: 'photos',
-            transformation: transformations,
+            transformation: config.cloudinary.photoTransformation,
           },
           (error, result) => {
             if (error) {

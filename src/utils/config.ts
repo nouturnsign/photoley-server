@@ -34,10 +34,8 @@ const config = {
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
-    photoPreTransformation: [
+    photoTransformation: [
       { width: 900, height: 1200, crop: 'fill' }, // Standardize dimensions
-    ],
-    photoPostTransformation: [
       { quality: 'auto' }, // Optimize quality
       { fetch_format: 'auto' }, // Optimize format
     ],
