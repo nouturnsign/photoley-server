@@ -19,6 +19,11 @@ const getImage = async (req: Request, res: Response) => {
       responseType: 'stream',
     });
 
+    if (response.status === 404) {
+      res.status(404).json({ message: 'Image not found' });
+      return;
+    }
+
     res.setHeader('Content-Type', response.headers['content-type']);
     response.data.pipe(res);
   } catch (error) {
