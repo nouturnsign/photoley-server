@@ -34,16 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  username:
-                    type: string
-                  profilePicture:
-                    type: string
-                  sticker:
-                    type: string
+                $ref: '#/components/schemas/UserProfileResponse'
         400:
           description: Bad request
         409:
@@ -77,16 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  username:
-                    type: string
-                  profilePicture:
-                    type: string
-                  sticker:
-                    type: string
+                $ref: '#/components/schemas/UserProfileResponse'
         400:
           description: Bad request
         401:
@@ -128,8 +110,13 @@ paths:
               schema:
                 type: string
                 format: binary
-        400:
-          description: Bad request
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/svg:
+              schema:
+                type: string
         404:
           description: Image not found
         500:
@@ -156,37 +143,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  photos:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        publicId:
-                          type: string
-                        pictureTaker:
-                          type: object
-                          properties:
-                            username:
-                              type: string
-                            profilePicture:
-                              type: string
-                        taggedUsers:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              username:
-                                type: string
-                              profilePicture:
-                                type: string
-                  total:
-                    type: integer
-                  skip:
-                    type: integer
-                  limit:
-                    type: integer
+                $ref: '#/components/schemas/FeedResponse'
         500:
           description: Internal server error
 
@@ -225,16 +182,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  publicId:
-                    type: string
-                  pictureTaker:
-                    type: string
-                  taggedUsers:
-                    type: array
-                    items:
-                      type: string
+                $ref: '#/components/schemas/PhotoUploadResponse'
         400:
           description: Bad request
         500:
@@ -252,16 +200,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  username:
-                    type: string
-                  profilePicture:
-                    type: string
-                  sticker:
-                    type: string
+                $ref: '#/components/schemas/UserProfileResponse'
         401:
           description: Unauthorized
         500:
@@ -292,16 +231,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  username:
-                    type: string
-                  profilePicture:
-                    type: string
-                  sticker:
-                    type: string
+                $ref: '#/components/schemas/UserProfileResponse'
         400:
           description: Bad request
         404:
@@ -330,28 +260,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  tags:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        tagId:
-                          type: string
-                        creator:
-                          type: object
-                          properties:
-                            username:
-                              type: string
-                            profilePicture:
-                              type: string
-                  total:
-                    type: integer
-                  skip:
-                    type: integer
-                  limit:
-                    type: integer
+                $ref: '#/components/schemas/TagsResponse'
         500:
           description: Internal server error
 
@@ -390,10 +299,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  heatmapData:
-                    type: object
+                $ref: '#/components/schemas/HeatmapResponse'
         400:
           description: Bad request
         409:
@@ -410,15 +316,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  stickers:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        publicId:
-                          type: string
+                $ref: '#/components/schemas/StickersResponse'
         500:
           description: Internal server error
 
@@ -432,3 +330,98 @@ components:
       type: apiKey
       in: cookie
       name: refreshToken
+
+  schemas:
+    UserPublicProfile:
+      type: object
+      properties:
+        username:
+          type: string
+        profilePicture:
+          type: string
+      required:
+        - username
+        - profilePicture
+
+    UserProfileResponse:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        profilePicture:
+          type: string
+        sticker:
+          type: string
+
+    FeedResponse:
+      type: object
+      properties:
+        photos:
+          type: array
+          items:
+            type: object
+            properties:
+              publicId:
+                type: string
+              pictureTaker:
+                $ref: '#/components/schemas/UserPublicProfile'
+              taggedUsers:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPublicProfile'
+        total:
+          type: integer
+        skip:
+          type: integer
+        limit:
+          type: integer
+
+    PhotoUploadResponse:
+      type: object
+      properties:
+        publicId:
+          type: string
+        pictureTaker:
+          type: string
+        taggedUsers:
+          type: array
+          items:
+            type: string
+
+    TagsResponse:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              tagId:
+                type: string
+              creator:
+                $ref: '#/components/schemas/UserPublicProfile'
+        total:
+          type: integer
+        skip:
+          type: integer
+        limit:
+          type: integer
+
+    HeatmapResponse:
+      type: object
+      properties:
+        heatmapData:
+          type: object
+
+    StickersResponse:
+      type: object
+      properties:
+        stickers:
+          type: array
+          items:
+            type: object
+            properties:
+              publicId:
+                type: string
