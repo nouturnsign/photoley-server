@@ -120,7 +120,6 @@ paths:
       security:
         - bearerAuth: []
         - cookieAuth: []
-        - cookieAuth: []
       responses:
         200:
           description: Image retrieved successfully
