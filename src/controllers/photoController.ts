@@ -98,6 +98,7 @@ const getFeed = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .skip(skip)
       .limit(limit)
+      .lean()
       .populate('pictureTaker', 'username profilePicture')
       .populate('taggedUsers', 'username profilePicture');
 
