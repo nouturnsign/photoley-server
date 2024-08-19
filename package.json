@@ -8,7 +8,7 @@
     "build": "tsc",
     "dev": "NODE_ENV=development ts-node-dev src/server.ts",
     "prestart": "npm run build",
-    "build-docs": "npx @redocly/cli lint --lint-config=error private@v1 && npx @redocly/cli build-docs private@v1"
+    "build-docs": "npx @redocly/cli lint --lint-config=error private@v1 && npx @redocly/cli build-docs private@v1 --output=docs/index.html"
   },
   "repository": {
     "type": "git",

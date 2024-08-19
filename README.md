@@ -52,7 +52,7 @@ To build documentation,
 npx @redocly/cli build-docs private@v1
 ```
 
-For convenience, the following script is provided to both lint and build docs.
+For convenience, the following script is provided to both lint and build docs, output to `docs/index.html`.
 
 ```sh
 npm run build-docs
