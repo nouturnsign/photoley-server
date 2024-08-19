@@ -29,7 +29,7 @@ paths:
                   format: binary
         required: true
       responses:
-        "201":
+        201:
           description: User created successfully
           content:
             application/json:
@@ -220,7 +220,7 @@ paths:
         - bearerAuth: []
         - cookieAuth: []
       responses:
-        "201":
+        201:
           description: Photo uploaded successfully
           content:
             application/json:
