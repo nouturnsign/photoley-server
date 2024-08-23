@@ -1,6 +1,6 @@
 openapi: "3.1.0"
 info:
-  version: "1.0.0-alpha.1"
+  version: "1.0.0-alpha.2"
   title: "Photoley API"
   description: Private RESTful API for Photoley app.
 servers:
